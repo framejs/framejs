@@ -1,20 +1,9 @@
-# Frame Component
+# Core
 
-An ultra light typescript library for writing custom elements.
-
-### Ultra light
-Less than 1.5kb (gzipped) when using all decorators in a custom element.
-
-### Simple, yet powerful
-This framework utilizes only typescript, and has no dependency on any CLI or specific build tooling.
-
-### A library, not a framework
-This library aims to ease the developer experience when writing custom elements, and to fit in to any build system.
-
-## Installing
+## Get started
 Install from NPM:
 ```sh
-npm install @framejs/component
+npm install @framejs/core
 ```
 
 ## Decorators
