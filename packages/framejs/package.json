@@ -1,0 +1,35 @@
+{
+  "name": "@framejs/core",
+  "version": "0.2.0",
+  "description": "A ultra light typescript framework for writing custom elements",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/framejs/framejs.git"
+  },
+  "keywords": [
+    "components",
+    "custom",
+    "dom",
+    "elements",
+    "web",
+    "typescript"
+  ],
+  "author": "Emil Møller <emilrmoeller@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/framejs/framejs/issues"
+  },
+  "homepage": "https://github.com/framejs/framejs#readme",
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  }
+}
