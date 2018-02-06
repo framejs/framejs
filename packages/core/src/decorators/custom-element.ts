@@ -28,7 +28,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 "object";
             
             // _needsStyle is used to tell if style has already been applied
-            public _needsStyle: boolean = true;
+            public _needsStyle: boolean = options.style ? true : false;;
 
             public _listernesBound: boolean = false;
 
@@ -102,13 +102,6 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             }
 
             renderer() {
-                const styleTemplate = document.createElement("template");
-                styleTemplate.innerHTML = `<style>${options.style}</style>`;
-
-                if (this._needsShadyCSS && options.style && this.render) {
-                    (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
-                }
-
                 if (super.renderer) {
                     // Call a custom renderer if defined
                     super.renderer(() => this.render());
@@ -119,6 +112,13 @@ export const CustomElement = (options: CustomElementOptionsType) => {
 
                 // Append style template to shadowRoot
                 if (this._needsStyle) {
+                    const styleTemplate = document.createElement("template");
+                    styleTemplate.innerHTML = `<style>${options.style}</style>`;
+
+                    if (this._needsShadyCSS && options.style && this.render) {
+                        (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
+                    }
+                    
                     this.shadowRoot.appendChild(styleTemplate.content.cloneNode(true));
                     this._needsStyle = false;
                 }
