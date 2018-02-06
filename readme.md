@@ -183,13 +183,13 @@ FrameJS rendererer for [lit-html](https://github.com/Polymer/lit-html).
 `lit-html` is a great templating extension when working with complex elements.
 Read more about [lit-html](https://github.com/Polymer/lit-html).
 
-## Install
+### Install lit-renderer
 
 ```sh
 $ npm install @framejs/core @framejs/lit-renderer
 ```
 
-## Usage
+### Use lit-renderer
 
 Extend `LitRenderer` instead of `HTMLElement` to get all it offers.
 
