@@ -1,0 +1,39 @@
+{
+  "name": "@framejs/renderer-preact",
+  "version": "0.0.1",
+  "description": "A Framejs renderer for preact",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/framejs/framejs.git"
+  },
+  "keywords": [
+    "components",
+    "custom",
+    "dom",
+    "elements",
+    "web",
+    "typescript",
+    "vdom"
+  ],
+  "author": "Emil Møller <emilrmoeller@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/framejs/framejs/issues"
+  },
+  "homepage": "https://github.com/framejs/framejs#readme",
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "preact": "^8.2.7"
+  }
+}

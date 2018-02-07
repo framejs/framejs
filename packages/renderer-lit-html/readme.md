@@ -8,7 +8,7 @@ Read more about [lit-html](https://github.com/Polymer/lit-html).
 ## Install
 
 ```sh
-$ npm install @framejs/core @framejs/renderer-lit-html
+$ npm install @framejs/core @framejs/renderer-lit-html lit-html
 ```
 
 ## Usage
