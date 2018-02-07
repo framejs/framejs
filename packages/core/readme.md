@@ -1,4 +1,4 @@
-# Core
+# @framejs/Core
 
 ## Get started
 Install from NPM:
@@ -17,7 +17,7 @@ To auto-render on `@Attr` and `@Prop` changes set `this._renderOnPropertyChange 
 This should only be done with a smart renderer function. it's enabled by default when extending LitRenderer.
 
 ```ts
-import { CustomElement } from '@framejs/component';
+import { CustomElement } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element',
@@ -36,7 +36,7 @@ Decorates the element with an attribute setter and getter and updates state/rend
 Providing a default value will set the attribute when the element is ready. If the attribute is already set by the user, the default will be overwritten.
 
 ```ts
-import { CustomElement, Attribute } from '@framejs/component';
+import { CustomElement, Attribute } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element'
@@ -55,7 +55,7 @@ Decorates the element with a property setter and getter and updates state/render
 This value will not be reflected in the rendered HTML as an attribute.
 
 ```ts
-import { CustomElement, Property } from '@framejs/component';
+import { CustomElement, Property } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element'
@@ -77,7 +77,7 @@ class MyElement extends HTMLElement {
 The function provided will get triggered when the property changes with the old and new value.
 
 ```ts
-import { CustomElement, Property, Observe } from '@framejs/component';
+import { CustomElement, Property, Observe } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element'
@@ -104,7 +104,7 @@ class MyElement extends HTMLElement {
 Creates a simple event emitter.
 
 ```ts
-import { CustomElement, Emit, EventEmitter } from '@framejs/component';
+import { CustomElement, Emit, EventEmitter } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element'
@@ -122,7 +122,7 @@ class MyElement extends HTMLElement {
 Listens for events and executes the nested logic.
 
 ```ts
-import { CustomElement, Listen } from '@framejs/component';
+import { CustomElement, Listen } from '@framejs/core';
 
 @CustomElement({
     tag: 'my-element'
@@ -143,7 +143,7 @@ class MyElement extends HTMLElement {
 It's also possible to listen for events from child elements
 
 ```ts
-import { CustomElement, Listen } from '@framejs/component';
+import { CustomElement, Listen } from '@framejs/core';
 import './my-other-element';
 
 @CustomElement({
@@ -164,29 +164,65 @@ class MyElement extends HTMLElement {
 }
 ```
 
+## Using @framejs/renderer-preact
 
-## Using lit-html renderer
-`lit-html` is a great templating extension when working with complex components.
-Read more about [lit-html](https://github.com/Polymer/lit-html).
+FrameJS rendererer for [Preact](https://preactjs.com/).
 
-Extend `LitRenderer` instead of `HTMLElement` to get all it offers.
+### Install
 
-> It's important to use `html` string literal function as it converts the literal to lit-html.
+```sh
+$ npm install @framejs/core @framejs/renderer-preact preact
+```
 
-```ts
-import { CustomElement, LitRenderer, html } from '@framejs/component';
+### Usage
+
+```tsx
+import { CustomElement } from '@framejs/core';
+import { withPreact } from '@framejs/renderer-preact';
+import { h } from 'preact';
 
 @CustomElement({
     tag: 'my-element'
 })
-class MyElement extends LitRenderer {
+class MyElement extends withPreact(HTMLElement) {
+    @Attribute() checked = true;
+
+    render() {
+        return <div>Am i checked? {this.checked ? 'Yup' : 'Nope'}</div>
+    }
+}
+```
+
+## Using lit-html renderer
+
+FrameJS rendererer for [lit-html](https://github.com/Polymer/lit-html).
+
+`lit-html` is a great templating extension when working with complex elements.
+Read more about [lit-html](https://github.com/Polymer/lit-html).
+
+### Install
+
+```sh
+$ npm install @framejs/core @framejs/renderer-lit-html lit-html
+```
+
+### Usage
+
+```ts
+import { CustomElement } from '@framejs/core';
+import { withLitHtml, html } from '@framejs/renderer-lit-html';
+
+@CustomElement({
+    tag: 'my-element'
+})
+class MyElement extends withLitHtml(HTMLElement) {
     render() {
         return html`I\m so lit!`;
     }
 }
 ```
 
-## Extendable renderer
+## Write a custom renderer
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
 
 This example shows how `LitRenderer` is written.
@@ -196,7 +232,7 @@ import { render } from 'lit-html/lib/lit-extended';
 
 export class LitRenderer extends HTMLElement {
     // Set _renderOnPropertyChange if the renderer
-    // should render on every property change.
+    // should render on every @Property/@Attribute change.
     public _renderOnPropertyChange = true;
 
     renderer(template) {
@@ -205,20 +241,6 @@ export class LitRenderer extends HTMLElement {
 }
 ```
 
-Inside your element you can use it like this:
+## Polyfills
 
-```ts
-import { CustomElement, Property } from '@framejs/component';
-import { html } from 'lit-html/lib/lit-exteded';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends LitRenderer {
-    @Property() message: string = 'it\'s lit!';
-
-    render() {
-        return html`${this.message}`;
-    }
-}
-```
+For more information on the polyfills, see the [web components polyfill documentation](https://github.com/webcomponents/webcomponentsjs).
