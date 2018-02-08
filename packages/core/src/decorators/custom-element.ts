@@ -28,7 +28,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 "object";
             
             // _needsStyle is used to tell if style has already been applied
-            public _needsStyle: boolean = options.style ? true : false;;
+            public _needsStyle: boolean = true;
 
             public _listernesBound: boolean = false;
 
@@ -54,6 +54,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
 
                 // _values gets set by @Attribute and @Property decorators
                 if (this._values) setDefaultValues(this, this._values);
+                
                 if (target._observedAttributes) setDefaultAttributes(this, target._observedAttributes);
 
                 // Call any previously defined connectedCallback functions.
@@ -102,6 +103,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             }
 
             renderer() {
+
                 if (super.renderer) {
                     // Call a custom renderer if defined
                     super.renderer(() => this.render());
@@ -110,17 +112,18 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                     this.shadowRoot.innerHTML = this.render();
                 }
 
-                // Append style template to shadowRoot
-                if (this._needsStyle) {
+                if (options.style && this._needsStyle && this.render) {
                     const styleTemplate = document.createElement("template");
                     styleTemplate.innerHTML = `<style>${options.style}</style>`;
 
-                    if (this._needsShadyCSS && options.style && this.render) {
+                    // Append style template to shadowRoot
+                    this.shadowRoot.appendChild(styleTemplate.content.cloneNode(true));
+
+                    if (this._needsShadyCSS) {
                         (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
                     }
-                    
-                    this.shadowRoot.appendChild(styleTemplate.content.cloneNode(true));
-                    this._needsStyle = false;
+
+                    this._needsStyle = false;   
                 }
                 
                 if (!this._listernesBound && target._listeners) {

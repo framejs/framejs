@@ -221,7 +221,8 @@ $ npm install @framejs/core @framejs/renderer-lit-html lit-html
 
 ```ts
 import { CustomElement } from '@framejs/core';
-import { withLitHtml, html } from '@framejs/renderer-lit-html';
+import { withLitHtml } from '@framejs/renderer-lit-html';
+import { html } from 'lit-html';
 
 @CustomElement({
     tag: 'my-element'

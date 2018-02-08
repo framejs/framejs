@@ -1,6 +1,6 @@
 {
   "name": "@framejs/renderer-lit-html",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A Framejs renderer for lit-html",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
