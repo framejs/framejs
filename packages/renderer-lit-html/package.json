@@ -1,6 +1,6 @@
 {
   "name": "@framejs/renderer-lit-html",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A Framejs renderer for lit-html",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,6 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "lit-html": "^0.8.0"
+    "lit-html": "^0.9.0"
   }
 }

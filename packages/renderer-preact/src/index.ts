@@ -1,4 +1,5 @@
-import { h, render } from 'preact';
+import { h, render } from '../node_modules/preact/dist/preact.esm.js';
+export { h } from '../node_modules/preact/dist/preact.esm.js';
 
 export type CssClassMap = { [className: string]: boolean };
 

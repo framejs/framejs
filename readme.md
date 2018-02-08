@@ -182,15 +182,14 @@ FrameJS rendererer for [Preact](https://preactjs.com/).
 ### Install
 
 ```sh
-$ npm install @framejs/core @framejs/renderer-preact preact
+$ npm install @framejs/core @framejs/renderer-preact
 ```
 
 ### Usage
 
 ```tsx
 import { CustomElement } from '@framejs/core';
-import { withPreact } from '@framejs/renderer-preact';
-import { h } from 'preact';
+import { withPreact, h } from '@framejs/renderer-preact';
 
 @CustomElement({
     tag: 'my-element'
@@ -214,15 +213,14 @@ Read more about [lit-html](https://github.com/Polymer/lit-html).
 ### Install
 
 ```sh
-$ npm install @framejs/core @framejs/renderer-lit-html lit-html
+$ npm install @framejs/core @framejs/renderer-lit-html
 ```
 
 ### Usage
 
 ```ts
 import { CustomElement } from '@framejs/core';
-import { withLitHtml } from '@framejs/renderer-lit-html';
-import { html } from 'lit-html';
+import { withLitHtml, html } from '@framejs/renderer-lit-html';
 
 @CustomElement({
     tag: 'my-element'
@@ -240,7 +238,8 @@ The built in renderer is very simple: it receives the returned value, and replac
 This example shows how `LitRenderer` is written.
 
 ```ts
-import { render } from 'lit-html/lib/lit-extended';
+import { render, html } from '../node-modules/lit-html/lib/lit-extended';
+export { html } from '../node_modules/lit-html/lib/lit-extended';
 
 export class LitRenderer extends HTMLElement {
     // Set _renderOnPropertyChange if the renderer
