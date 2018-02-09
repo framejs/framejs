@@ -20,6 +20,9 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             // __connected will be true when connectedCallback has fired.
             public __connected: boolean = false;
 
+            // __superConnected will be true when super.connectedCallback has fired.
+            public __superConnected: boolean = false;
+
             // _needsRender is used to schedule micro-task for rendering.
             public _needsRender: boolean = false;
 
@@ -56,9 +59,6 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 if (this._values) setDefaultValues(this, this._values);
                 
                 if (target._observedAttributes) setDefaultAttributes(this, target._observedAttributes);
-
-                // Call any previously defined connectedCallback functions.
-                super.connectedCallback && super.connectedCallback();
 
                 // Only invalidate if _renderOnPropertyChange
                 if (this._renderOnPropertyChange) {
@@ -103,7 +103,6 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             }
 
             renderer() {
-
                 if (super.renderer) {
                     // Call a custom renderer if defined
                     super.renderer(() => this.render());
@@ -129,6 +128,12 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 if (!this._listernesBound && target._listeners) {
                     bindListeners(this, target, target._listeners);
                     this._listernesBound = true;
+                }
+
+                // delay super.connectedCallback until first render
+                if (!this.__superConnected) {
+                    super.connectedCallback && super.connectedCallback();
+                    this.__superConnected = true;
                 }
             }
         };
