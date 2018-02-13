@@ -12,11 +12,16 @@ import { camelCase } from "../utils/camel-case.js";
 export interface CustomElementOptionsType {
     tag: string;
     style?: string;
+    shadow?: boolean;
+    mode?: 'open' | 'closed';
 }
 
 export const CustomElement = (options: CustomElementOptionsType) => {
     return (target: any) => {
         const hostConstructor: any = class extends (target as { new (): any }) {
+            // _root is either this instance or shadowRoot
+            public _root: any;
+
             // __connected will be true when connectedCallback has fired.
             public __connected: boolean = false;
 
@@ -47,8 +52,12 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             constructor() {
                 super();
 
-                // Attach shadow if not set.
-                attachShadow(this);
+                if (options.shadow === false) {
+                    this._root = this;
+                } else {
+                    // Attach shadow if not set.
+                    attachShadow(this, options.mode);
+                }
             }
 
             connectedCallback() {
@@ -105,10 +114,10 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             renderer() {
                 if (super.renderer) {
                     // Call a custom renderer if defined
-                    super.renderer(() => this.render());
+                    super.renderer(() => this.render(), this._root);
                 } else {
                     // Update host template
-                    this.shadowRoot.innerHTML = this.render();
+                    this._root.innerHTML = this.render();
                 }
 
                 if (options.style && this._needsStyle && this.render) {
@@ -116,7 +125,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                     styleTemplate.innerHTML = `<style>${options.style}</style>`;
 
                     // Append style template to shadowRoot
-                    this.shadowRoot.appendChild(styleTemplate.content.cloneNode(true));
+                    this._root.appendChild(styleTemplate.content.cloneNode(true));
 
                     if (this._needsShadyCSS) {
                         (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);

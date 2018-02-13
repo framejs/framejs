@@ -1,8 +1,6 @@
 import { h, render } from 'preact';
 export { h } from 'preact';
 
-export type CssClassMap = { [className: string]: boolean };
-
 declare global {
   namespace JSX {
     interface Element {}
@@ -16,10 +14,10 @@ declare global {
 export const withPreact = (base: any) => class extends base {
     public _renderOnPropertyChange = true;
 
-    renderer(template) {
+    renderer(template, _root) {
         this._preactDom = render(
             template(),
-            this.shadowRoot,
+            _root,
             this._preactDom
         );
     }

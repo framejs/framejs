@@ -1,7 +1,9 @@
 import { camelCase } from "../utils/camel-case.js";
 
-export const attachShadow = (elem: any): void => {
-    !elem.shadowRoot && elem.attachShadow({ mode: "open" });
+export const attachShadow = (elem: any, shadowMode: string = 'open'): void => {
+    if (!elem.shadowRoot) {
+        elem._root = elem.attachShadow({ mode: shadowMode })
+    };
 };
 
 export const setDefaultValues = (elem: any, values: any[]): void => {

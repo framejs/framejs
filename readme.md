@@ -19,13 +19,13 @@ npm install @framejs/core
 
 ## Decorators
 
-### @CustomElement({tag: string, style?: string})
+### @CustomElement({{tag: string, style?: string, shadow?: boolean = true, mode?: 'open' | 'closed'}})
 The main decorator that holds state provides a renderer (this is needed in order to use the rest of the decorators).
 
-To manually run the renderer use: `this._invalidate();`
+To manually run the renderer use: `this.renderer();`
 
 To auto-render on `@Attr` and `@Prop` changes set `this._renderOnPropertyChange = true`.
-This should only be done with a smart renderer function. it's enabled by default when extending LitRenderer.
+This should only be done with a smart renderer function. it's enabled by default when extending renderer-preact or renderer-lit.
 
 ```ts
 import { CustomElement } from '@framejs/core';

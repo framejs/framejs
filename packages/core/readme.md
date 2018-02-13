@@ -8,7 +8,7 @@ npm install @framejs/core
 
 ## Decorators
 
-### @CustomElement({tag: string, style?: string})
+### @CustomElement({tag: string, style?: string, shadow?: boolean = true, mode?: 'open' | 'closed'})
 The main decorator that holds state provides a renderer (this is needed in order to use the rest of the decorators).
 
 To manually run the renderer use: `this._invalidate();`
@@ -235,8 +235,8 @@ export class LitRenderer extends HTMLElement {
     // should render on every @Property/@Attribute change.
     public _renderOnPropertyChange = true;
 
-    renderer(template) {
-        render(template(), this.shadowRoot);
+    renderer(template, _root) {
+        render(template(), _root);
     }
 }
 ```
