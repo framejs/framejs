@@ -225,21 +225,7 @@ class MyElement extends withLitHtml(HTMLElement) {
 ## Write a custom renderer
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
 
-This example shows how `LitRenderer` is written.
-
-```ts
-import { render } from 'lit-html/lib/lit-extended';
-
-export class LitRenderer extends HTMLElement {
-    // Set _renderOnPropertyChange if the renderer
-    // should render on every @Property/@Attribute change.
-    public _renderOnPropertyChange = true;
-
-    renderer(template, _root) {
-        render(template(), _root);
-    }
-}
-```
+See the code for [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts) for implementation details.
 
 ## Polyfills
 
