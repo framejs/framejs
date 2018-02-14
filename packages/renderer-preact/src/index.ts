@@ -18,7 +18,7 @@ export const withPreact = (base: any) => class extends base {
         this._preactDom = render(
             template(),
             _root,
-            this._preactDom
+            this._preactDom || _root.childNodes[0]
         );
     }
 }

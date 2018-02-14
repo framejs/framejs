@@ -65,21 +65,19 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 this.__connected = true;
 
                 // _values gets set by @Attribute and @Property decorators
-                if (this._values) setDefaultValues(this, this._values);
+                if (this._values) {
+                    setDefaultValues(this, this._values)
+                };
                 
-                if (target._observedAttributes) setDefaultAttributes(this, target._observedAttributes);
+                if (target._observedAttributes) {
+                    setDefaultAttributes(this, target._observedAttributes)
+                };
 
                 // Only invalidate if _renderOnPropertyChange
                 if (this._renderOnPropertyChange) {
                     this._invalidate();
                 } else {
                     this.renderer();
-                }
-            }
-
-            disconnectedCallback() {
-                if (target._listeners) {
-                    unbindListeners(this, target, target._listeners);
                 }
             }
 
@@ -121,16 +119,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 }
 
                 if (options.style && this._needsStyle && this.render) {
-                    const styleTemplate = document.createElement("template");
-                    styleTemplate.innerHTML = `<style>${options.style}</style>`;
-
-                    // Append style template to shadowRoot
-                    this._root.appendChild(styleTemplate.content.cloneNode(true));
-
-                    if (this._needsShadyCSS) {
-                        (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
-                    }
-
+                    this._applyStyle();
                     this._needsStyle = false;   
                 }
                 
@@ -143,6 +132,25 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 if (!this.__superConnected) {
                     super.connectedCallback && super.connectedCallback();
                     this.__superConnected = true;
+                }
+            }
+
+            _applyStyle(): void {
+                const styleTemplate = document.createElement("template");
+                styleTemplate.innerHTML = `<style>${options.style}</style>`;
+
+                // Append style template to shadowRoot
+                this._root.appendChild(styleTemplate.content.cloneNode(true));
+
+                if (this._needsShadyCSS) {
+                    (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
+                }
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback && super.disconnectedCallback();
+                if (target._listeners) {
+                    unbindListeners(this, target, target._listeners);
                 }
             }
         };
