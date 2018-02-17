@@ -142,7 +142,7 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 // Append style template to shadowRoot
                 this._root.appendChild(styleTemplate.content.cloneNode(true));
 
-                if (this._needsShadyCSS) {
+                if (this._needsShadyCSS && !document.head.querySelector(`[scope="${this.localName}"]`)) {
                     (<any>window).ShadyCSS.prepareTemplate(styleTemplate, this.localName);
                 }
             }
