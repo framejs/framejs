@@ -41,7 +41,7 @@ class MyElement extends HTMLElement {
 }
 ```
 
-### @Attribute() [property]: string | boolean | number
+### @Attribute() [property]: string | boolean
 Decorates the element with an attribute setter and getter and updates state/render on change. Updating the property from within the element or externally will update the attribute in the rendered HTML and the other way around.
 
 Providing a default value will set the attribute when the element is ready. If the attribute is already set by the user, the default will be overwritten.
@@ -76,7 +76,7 @@ class MyElement extends HTMLElement {
 
     render() {
         return `
-            ${data.map(word => {
+            ${this.data.map(word => {
                 return word;
             }).join(' ')}
         `;
@@ -103,7 +103,7 @@ class MyElement extends HTMLElement {
 
     render() {
         return `
-            ${data.map(word => {
+            ${this.data.map(word => {
                 return word;
             }).join(' ')}
         `;
@@ -121,7 +121,7 @@ import { CustomElement, Emit, EventEmitter } from '@framejs/core';
     tag: 'my-element'
 })
 class MyElement extends HTMLElement {
-    @Emit() isReady: EventEmitter;
+    @Event() isReady: EventEmitter;
 
     connectedCallback() {
         this.isReady.emit('my-element is ready!')
@@ -163,7 +163,7 @@ import './my-other-element';
 class MyElement extends HTMLElement {
     @Listen('onOtherElementClicked')
     onOtherElementClickedHandler(event) {
-        console.log(event)
+        console.log(event.detail)
     }
 
     render() {
