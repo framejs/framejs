@@ -35,6 +35,17 @@ Decorates the element with an attribute setter and getter and updates state/rend
 
 Providing a default value will set the attribute when the element is ready. If the attribute is already set by the user, the default will be overwritten.
 
+Use type annotation to determine how to get back the data. 
+
+Eg. A boolean in HTML can look like `<my-element checked></my-element>`,
+so returning data from `document.querySelector('my-element').checked` will be `""`.
+
+Adding `boolean` to a checked attribute like this `@Attribute() checked: boolean;` will tell framejs
+to check if the attribute `checked` is written on `<my-element></my-element>`.
+
+This is the same for `number` and an HTML attribute always will be a string. So setting `@Attribute() index: number` will make sure to return `index` as a number.
+
+
 ```ts
 import { CustomElement, Attribute } from '@framejs/core';
 

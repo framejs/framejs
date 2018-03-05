@@ -64,9 +64,9 @@ export const CustomElement = (options: CustomElementOptionsType) => {
                 // Let other decorators know that the component is instanciated.
                 this.__connected = true;
 
-                // _values gets set by @Attribute and @Property decorators
-                if (this._values) {
-                    setDefaultValues(this, this._values)
+                // props gets set by @Attribute and @Property decorators
+                if (this.props) {
+                    setDefaultValues(this, this.props)
                 };
                 
                 if (target._observedAttributes) {
