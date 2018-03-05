@@ -35,6 +35,8 @@ Decorates the element with an attribute setter and getter and updates state/rend
 
 Providing a default value will set the attribute when the element is ready. If the attribute is already set by the user, the default will be overwritten.
 
+The value will also be available in `this.props`;
+
 Use type annotation to determine how to get back the data. 
 
 Eg. A boolean in HTML can look like `<my-element checked></my-element>`,
@@ -64,6 +66,8 @@ class MyElement extends HTMLElement {
 ### @Property() [property]: any
 Decorates the element with a property setter and getter and updates state/render on change.
 This value will not be reflected in the rendered HTML as an attribute.
+
+The value will also be available in `this.props`;
 
 ```ts
 import { CustomElement, Property } from '@framejs/core';
