@@ -1,20 +1,20 @@
 export const setPropValue = (elem: any, name: string, value: any): void => {
-    if (!elem._values) {
-        elem._values = {};
+    if (!elem.props) {
+        elem.props = {};
     }
 
-    elem._values[name] = value;
+    elem.props[name] = value;
 };
 
 export const getPropValue = (elem: any, name: string): any => {
-    if (!elem._values) {
-        elem._values = {};
+    if (!elem.props) {
+        elem.props = {};
     }
 
-    if (!elem._values.hasOwnProperty(name)) {
+    if (!elem.props.hasOwnProperty(name)) {
         return;
     } else {
-        return elem._values[name];
+        return elem.props[name];
     }
 };
 

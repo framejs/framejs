@@ -1,4 +1,5 @@
 import { camelCase } from "../utils/camel-case.js";
+import "reflect-metadata";
 
 export const attachShadow = (elem: any, shadowMode: string = 'open'): void => {
     if (!elem.shadowRoot) {
@@ -28,23 +29,18 @@ export const normaliseAttributeValue = (
     attribute: string,
     newVal: string,
     oldVal: string
-): boolean | string => {
-    // Treat value as a boolean if the values are boolean signature
-    if (
-        elem.hasAttribute(attribute) &&
-        newVal !== null &&
-        newVal.length === 0 &&
-        oldVal !== newVal
-    ) {
-        return true;
-    } else if (!elem.hasAttribute(attribute) && newVal === null) {
-        return false;
+): boolean | string |  Number => {
+    const type = Reflect.getMetadata("design:type", elem, camelCase(attribute))
+
+    if (type.name === 'Boolean') {
+        return elem.hasAttribute(attribute);
     }
 
-    // Treat value as a string value is attribute has value
-    if (newVal !== null && oldVal !== newVal) {
-        return newVal;
+    if (type.name === 'Number') {
+        return Number(newVal);
     }
+
+    return newVal;
 };
 
 export const registerListener = (elem: any, listener: string, name: string, target?: any) => {
