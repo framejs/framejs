@@ -32,12 +32,10 @@ export const normaliseAttributeValue = (
 ): boolean | string |  Number => {
     const type = Reflect.getMetadata("design:type", elem, camelCase(attribute))
 
-    // Boolean
     if (type.name === 'Boolean') {
         return elem.hasAttribute(attribute);
     }
 
-    // String
     if (type.name === 'Number') {
         return Number(newVal);
     }
