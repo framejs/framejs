@@ -1,13 +1,18 @@
-import { setPropValue, getPropValue, runObserver, setPropertyAsAttribute, registerAttribute } from '../core/property-helpers.js';
+import { setPropValue, getPropValue, runObserver, setPropertyAsAttribute, registerAttribute, setPropOption, reflectType } from '../core/property-helpers.js';
 import { dashCase } from '../utils/dash-case.js';
 
-export const Attribute = () => {
+export interface AttributeOptions {
+    type?: Function;
+}
+
+export const Attribute = (options?: AttributeOptions) => {
     return (target: any, name: string) => {
         // Using let as uglifying fails if const
         let attribute = dashCase(name);
 
         // Register attribute for re-applying attributes when connected
         registerAttribute(target, attribute);
+        setPropOption(target, name, options);
 
         const propertyDefinition = {
             set: function(value) {

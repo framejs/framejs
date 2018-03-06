@@ -16,6 +16,18 @@ export interface CustomElementOptionsType {
     mode?: 'open' | 'closed';
 }
 
+export interface PropsType {
+    [name: string]: any;
+}
+
+export interface PropsOptionsType {
+    [name: string]: PropsOptionsOptionType;
+}
+
+export interface PropsOptionsOptionType {
+    type: string;
+}
+
 export const CustomElement = (options: CustomElementOptionsType) => {
     return (target: any) => {
         const hostConstructor: any = class extends (target as { new (): any }) {
@@ -39,6 +51,10 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             public _needsStyle: boolean = true;
 
             public _listernesBound: boolean = false;
+
+            static props: PropsType = {};
+
+            static propsOptions: PropsOptionsType = {};
 
             // Register native observedAttributes
             static get observedAttributes() {
@@ -84,12 +100,12 @@ export const CustomElement = (options: CustomElementOptionsType) => {
             attributeChangedCallback(name, oldValue, newValue) {
                 super.attributeChangedCallback &&
                 super.attributeChangedCallback(name, oldValue, newValue);
-
                 if (oldValue !== newValue) {
                     const property = camelCase(name);
                     this[property] = normaliseAttributeValue(
+                        target,
                         this,
-                        name,
+                        property,
                         newValue,
                         oldValue
                     );

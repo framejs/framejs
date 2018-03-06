@@ -1,5 +1,6 @@
 import { camelCase } from "../utils/camel-case.js";
-import "reflect-metadata";
+import { dashCase } from "../utils/dash-case.js";
+import { reflectType } from './property-helpers';
 
 export const attachShadow = (elem: any, shadowMode: string = 'open'): void => {
     if (!elem.shadowRoot) {
@@ -7,7 +8,7 @@ export const attachShadow = (elem: any, shadowMode: string = 'open'): void => {
     };
 };
 
-export const setDefaultValues = (elem: any, values: any[]): void => {
+export const setDefaultValues = (elem: any, values: any): void => {
     Object.keys(values).forEach(prop => {
         if (elem.hasOwnProperty(prop)) {
             const value = elem[prop];
@@ -25,18 +26,19 @@ export const setDefaultAttributes = (elem: any, attributes: string[] = []): void
 };
 
 export const normaliseAttributeValue = (
+    constructor: any,
     elem: any,
-    attribute: string,
+    name: string,
     newVal: string,
     oldVal: string
 ): boolean | string |  Number => {
-    const type = Reflect.getMetadata("design:type", elem, camelCase(attribute))
-
-    if (type.name === 'Boolean') {
-        return elem.hasAttribute(attribute);
+    const type = constructor.propsOptions[name] ? constructor.propsOptions[name].type : null;
+    
+    if (type && type.name === 'Boolean') {
+        return elem.hasAttribute(dashCase(name));
     }
 
-    if (type.name === 'Number') {
+    if (type && type.name === 'Number') {
         return Number(newVal);
     }
 

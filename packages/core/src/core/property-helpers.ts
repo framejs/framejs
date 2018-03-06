@@ -1,4 +1,8 @@
-export const setPropValue = (elem: any, name: string, value: any): void => {
+/// <reference types="reflect-metadata" />
+
+import { AttributeOptions } from '../decorators/attribute';
+
+export const setPropValue = (elem: any, name: string, value: any, options?: AttributeOptions): void => {
     if (!elem.props) {
         elem.props = {};
     }
@@ -77,3 +81,19 @@ export const setPropertyAsAttribute = (elem: any, attribute: string, value: any)
         elem.setAttribute(attribute, value);
       }
 }
+
+export const setPropOption = (elem: any, name: string, options: any): void => {
+    if (!elem.constructor.propsOptions) {
+        elem.constructor.propsOptions = {};
+    }
+    elem.constructor.propsOptions[name] = options ? options : { type: reflectType(elem, name) };
+}
+
+// Reflect type from https://github.com/kenchris/lit-element/
+export const reflectType = (prototype: any, propertyName: string): any => {
+    const { hasMetadata = () => false, getMetadata = () => null } = Reflect;
+    if (hasMetadata('design:type', prototype, propertyName)) {
+      return getMetadata('design:type', prototype, propertyName);
+    }
+    return null;
+  }
