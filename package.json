@@ -1,6 +1,6 @@
 {
   "name": "framejs",
-  "description": "A ultra light typescript framework for writing custom elements",
+  "description": "A ultra light library for writing custom elements",
   "private": true,
   "repository": {
     "type": "git",

@@ -1,11 +1,12 @@
 {
   "name": "@framejs/renderer-preact",
-  "version": "0.0.6",
+  "version": "1.0.0-rc.1",
   "description": "A Framejs renderer for preact",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node ./node_modules/typescript/bin/tsc",
+    "build": "node ./node_modules/typescript/bin/tsc && npm run bundle",
+    "bundle": "node node_modules/rollup/bin/rollup dist/index.js -f es -o dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
@@ -31,9 +32,8 @@
   },
   "homepage": "https://github.com/framejs/framejs#readme",
   "devDependencies": {
+    "preact": "^8.2.7",
+    "rollup": "^0.57.1",
     "typescript": "^2.6.2"
-  },
-  "dependencies": {
-    "preact": "^8.2.7"
   }
 }

@@ -1,5 +1,5 @@
-import { h, render } from 'preact';
-export { h } from 'preact';
+import { h, render } from '../node_modules/preact/dist/preact.esm.js';
+export { h } from '../node_modules/preact/dist/preact.esm.js';
 
 declare global {
   namespace JSX {
@@ -27,13 +27,15 @@ export const toVdom = (element: any, nodeName?: string) => {
 }
 
 export const withPreact = (base: any) => class extends base {
-    public _renderOnPropertyChange = true;
-
-    renderer(template, _root) {
-        this._preactDom = render(
-            template(),
-            _root,
-            this._preactDom || _root.childNodes[0]
+    renderer() {
+      if ((<any>this).render()) {
+          const root = this.shadowRoot ? this.shadowRoot : this;
+          root.innerHTML = `RENDERED: ${(<any>this).render()}`;
+          this._preactDom = render(
+            (<any>this).render(),
+            root,
+            this._preactDom || root.childNodes[0]
         );
-    }
+      }
+  }
 }
