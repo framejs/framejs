@@ -29,14 +29,14 @@ export const createProperty = (prototype: any, propName: string, value: any) => 
 };
 
 export const attachProperty = (prototype: any, propName: string) => {
-    function get(this: FrameElement) {
+    function get() {
         if (!this.props) {
             this.props = {};
         }
 
         return this.props[propName];
     }
-    function set(this: FrameElement, value: any) {
+    function set(value: any) {
         const oldValue = this.props[propName];
         this.props[propName] = value;
 

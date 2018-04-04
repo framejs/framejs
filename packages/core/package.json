@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "node ./node_modules/typescript/bin/tsc",
-    "test": "npm run build && node ./node_modules/karma/bin/karma start --single-run --browsers ChromeHeadless karma.conf.js",
+    "build:tests": "node ./node_modules/typescript/bin/tsc -p tsconfig-tests.json",
+    "test": "npm run build:tests && node ./node_modules/karma/bin/karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "precommit": "lint-staged",
     "prettier": "prettier --write **/*.ts"
   },
@@ -61,6 +62,7 @@
     "prettier": "1.11.1",
     "reflect-metadata": "^0.1.12",
     "rollup": "^0.57.1",
+    "rollup-plugin-typescript": "^0.8.1",
     "typescript": "^2.8.1"
   }
 }

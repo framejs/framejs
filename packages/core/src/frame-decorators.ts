@@ -1,4 +1,3 @@
-/// <reference types="reflect-metadata" />
 import { attachProperty } from './frame-element.js';
 
 export interface IPropOptions {
@@ -6,7 +5,7 @@ export interface IPropOptions {
 }
 
 export const reflectType = (prototype: any, propertyName: string): Function => {
-    const { hasMetadata = () => false, getMetadata = () => null } = Reflect;
+    const { hasMetadata = () => false, getMetadata = () => null }: any = Reflect;
     if (hasMetadata('design:type', prototype, propertyName)) {
         return getMetadata('design:type', prototype, propertyName);
     }
