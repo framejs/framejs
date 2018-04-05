@@ -20,7 +20,7 @@ export interface CustomElementOptionsType {
     mode?: 'open' | 'closed';
 }
 
-export const CustomElement = (options: CustomElementOptionsType): any => {
+export const Define = (options: CustomElementOptionsType): any => {
     return (target: any) => {
         const Klass = class extends target {
             public _shadow = options.shadow ? options.shadow : true;
