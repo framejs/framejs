@@ -256,7 +256,7 @@ class HelloWorld extends FrameElement {
 customElements.define('hello-world', HelloWorld);
 ```
 
-> If you haven't set `this._invalideOnPropsChange = false` or are using [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact) you need to add style to the render function to ensure the style to be loaded correctly on every render cycle and initially available for ShadyCSS.
+> If you haven't set `this._invalidateOnPropChanges = false` or are using [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact) you need to add style to the render function to ensure the style to be loaded correctly on every render cycle and initially available for ShadyCSS.
 
 ```js
 import { FrameElement } from '@framejs/core';
