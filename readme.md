@@ -130,6 +130,8 @@ customElements.define('hello-world', HelloWorld);
 
 ### Example: Using properties
 
+Properties are available as `this.props[property]`, `this[property]` and [destructuring](user-content-access-element-properties-and-methods-from-destructuring)
+
 ```js
 import { FrameElement } from '@framejs/core';
 
