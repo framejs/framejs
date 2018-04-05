@@ -404,7 +404,7 @@ class HelloWorld extends FrameElement {
 }
 ```
 
-> If you are unsure on the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/vanillajs/packages/core/tsconfig.json) used in FrameJS.
+> If you are unsure about the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/vanillajs/packages/core/tsconfig.json) used in FrameJS.
 
 ## Write a custom renderer
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
