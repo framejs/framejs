@@ -7,7 +7,7 @@ export const withLitHtml = (base: any) =>
             if ((<any>this).render) {
                 const root = this.shadowRoot ? this.shadowRoot : this;
 
-                render((<any>this).render(), root);
+                render((<any>this).render(this), root);
             }
         }
     };

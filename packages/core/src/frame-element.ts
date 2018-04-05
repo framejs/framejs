@@ -238,7 +238,7 @@ export class FrameElement extends HTMLElement {
     private renderer(): void {
         if ((<any>this).render) {
             const root = this.shadowRoot ? this.shadowRoot : this;
-            root.innerHTML = (<any>this).render();
+            root.innerHTML = (<any>this).render(this);
         }
     }
 }

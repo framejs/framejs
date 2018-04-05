@@ -4,12 +4,12 @@ Welcome to FrameJS! This documentation is created to help answer any questions y
 
 ### A web component library for building reusable elements
 Build encapsulated elements that manages their own state, then reuse them in any web project to make complex UIs.
-With it's small size (~1.5kb gzipped) it fits well for simple elements as well for complex modules.
+With it's small size (~1.5kb gzipped) it fits well for simple elements as well as for complex components.
 
 ### Why FrameJS?
-FrameJS was created to solve design and UI implementation across multiple projects and frameworks, not only to share style, but to share the experience of well crafted UI.
+FrameJS was created to solve design and UI implementations across multiple projects and frameworks, not only to share style, but to share the experience of well crafted UI.
 
-An element created using FrameJS is just a regular web component, but with the magic of automatic updates on changing properties and attributes and helpful features to make the custom elements API an enjoyable experience.
+An element created using FrameJS is just a regular web component, but with the magic of automatic updates on properties and attributes changes and helpful features to make the custom elements API an enjoyable experience to use.
 
 ## Try FrameJS
 
@@ -18,7 +18,7 @@ Try FrameJS online or set up your local development environment.
 ### Online
 If you’re just interested in playing around with FrameJS, you can use an online code playground. Try a Hello World template on [Stackblitz](https://stackblitz.com/edit/framejs?file=index.js)
 
-Other Hello World templates:
+Other Hello World templates on stackblitz:
 * [FrameJS + lit-html](https://stackblitz.com/edit/framejs-lit-html?file=index.html)
 * [FrameJS + preact](https://stackblitz.com/edit/framejs-preact?file=index.js)
 * [FrameJS + preact + typescript](https://stackblitz.com/edit/framejs-typescript-preact?file=index.tsx)
@@ -70,6 +70,10 @@ customElements.define('hello-world', HelloWorld);
 These examples expects that you are using a module bundler of some kind.
 
 ### Using lit html renderer
+
+```sh
+npm install @framejs/renderer-lit-html
+```
 ```javascript
     import { FrameElement } from '@framejs/core';
     import { withLitHtml, html } from '@framejs/renderer-lit-html';
@@ -86,6 +90,9 @@ These examples expects that you are using a module bundler of some kind.
 ### Using preact renderer
 To be able to use JSX you need to either use babel (output to es6) or typescript. This examples are using typescript with `--jsx --jsxFactory h` .
 
+```sh
+npm install @framejs/renderer-preact
+```
 ```tsx
     import { FrameElement } from '@framejs/core';
     import { withPreact, h } from '@framejs/renderer-preact';
@@ -93,6 +100,28 @@ To be able to use JSX you need to either use babel (output to es6) or typescript
     class HelloWorld extends withPreact(FrameElement) {
         render() {
             return <h1>Hello World!</h1>
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Callback after first render and on destroy
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        elementDidMount() {
+            console.log('Hello!');
+        }
+
+        elementDidUnmount() {
+            console.log('Bye!')
+        }
+
+        render() {
+            return `Hello World!`
         }
     }
 
@@ -262,6 +291,31 @@ The syntax for a listener is:
     customElements.define('hello-world', HelloWorld);
 ```
 
+If you are using [lit-html renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-lit-html) you need to add style to the render function to ensure the style to be loaded correctly and available for ShadyCSS.
+
+```js
+import { FrameElement } from '@framejs/core';
+import { withLitHtml, html } from '@framejs/renderer-lit';
+
+    class HelloWorld extends FrameElement {
+        static get style() {
+            return `
+                :host {
+                    color: dodgerBlue;
+                }
+            `;
+        }
+
+        render() {
+            return html`
+                <style>${this.constructor.style}</style>
+                Hello World!`;
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
 ### Example: Custom element without shadow dom
 ```js
     import { FrameElement } from '@framejs/core';
@@ -282,28 +336,6 @@ Manually trigger re-render by using `this.invalidate();`
 
     class HelloWorld extends FrameElement {
         _invalidateOnPropChanges = false;
-    }
-
-    customElements.define('hello-world', HelloWorld);
-```
-
-### Example: Callback after first render and on destroy
-
-```js
-    import { FrameElement } from '@framejs/core';
-
-    class HelloWorld extends FrameElement {
-        elementDidMount() {
-            console.log('Hello!');
-        }
-
-        elementDidUnmount() {
-            console.log('Bye!')
-        }
-
-        render() {
-            return `Hello World!`
-        }
     }
 
     customElements.define('hello-world', HelloWorld);

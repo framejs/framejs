@@ -6,8 +6,6 @@
   "types": "dist/renderer-preact.d.ts",
   "scripts": {
     "build": "node ./node_modules/typescript/bin/tsc",
-    "bundle": "node node_modules/rollup/bin/rollup dist/renderer-preact.js -f iife -g preact:h,preact:render -n rendererPreact -o dist/renderer-preact.js",
-    "bundle:esm": "node node_modules/rollup/bin/rollup dist/renderer-preact.js -f es -o dist/renderer-preact.esm.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
@@ -32,9 +30,10 @@
     "url": "https://github.com/framejs/framejs/issues"
   },
   "homepage": "https://github.com/framejs/framejs#readme",
+  "dependencies": {
+    "preact": "^8.2.7"
+  },
   "devDependencies": {
-    "preact": "^8.2.7",
-    "rollup": "^0.57.1",
     "typescript": "^2.6.2"
   }
 }
