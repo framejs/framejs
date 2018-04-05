@@ -291,7 +291,7 @@ class HelloWorld extends FrameElement {
 customElements.define('hello-world', HelloWorld);
 ```
 
-If you are using [lit-html renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-lit-html) you need to add style to the render function to ensure the style to be loaded correctly and available for ShadyCSS.
+> If you aren't using [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact) you need to add style to the render function to ensure the style to be loaded correctly on every render cycle and initially available for ShadyCSS.
 
 ```js
 import { FrameElement } from '@framejs/core';
@@ -403,6 +403,8 @@ class HelloWorld extends FrameElement {
     }
 }
 ```
+
+> If you are unsure on the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/vanillajs/packages/core/tsconfig.json) used in FrameJS.
 
 ## Write a custom renderer
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
