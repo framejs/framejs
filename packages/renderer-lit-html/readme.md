@@ -22,7 +22,7 @@ import { withLitHtml, html } from '@framejs/renderer-lit-html';
 })
 class MyElement extends withLitHtml(HTMLElement) {
     render() {
-        return html`I\m so lit!`;
+        return html`I'm so lit!`;
     }
 }
 ```

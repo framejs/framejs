@@ -1,7 +1,7 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "outDir": "./dist/",
+        "outDir": "./.tests/",
         "module": "es6",
         "sourceMap": true,
         "declaration": true,
@@ -12,11 +12,6 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2017", "dom"],
         "jsx": "react",
-        "jsxFactory": "h",
-    },
-    "files": [
-        "src/frame-decorators.ts",
-        "src/frame-element.ts",
-        "src/index.ts",
-    ]
+        "jsxFactory": "h"
+    }
 }

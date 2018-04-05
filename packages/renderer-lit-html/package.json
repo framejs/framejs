@@ -1,9 +1,9 @@
 {
   "name": "@framejs/renderer-lit-html",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "A Framejs renderer for lit-html",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/renderer-lit-html.js",
+  "types": "dist/renderer-lit-html.d.ts",
   "scripts": {
     "build": "node ./node_modules/typescript/bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,10 +29,10 @@
     "url": "https://github.com/framejs/framejs/issues"
   },
   "homepage": "https://github.com/framejs/framejs#readme",
+  "dependencies": {
+    "lit-html": "^0.8.0"
+  },
   "devDependencies": {
     "typescript": "^2.6.2"
-  },
-  "dependencies": {
-    "lit-html": "^0.9.0"
   }
 }
