@@ -75,16 +75,16 @@ These examples expects that you are using a module bundler of some kind.
 npm install @framejs/renderer-lit-html
 ```
 ```javascript
-    import { FrameElement } from '@framejs/core';
-    import { withLitHtml, html } from '@framejs/renderer-lit-html';
+import { FrameElement } from '@framejs/core';
+import { withLitHtml, html } from '@framejs/renderer-lit-html';
 
-    class HelloWorld extends withLitHtml(FrameElement) {
-        render() {
-            return html`<h1>Hello World!</h1>`
-        }
+class HelloWorld extends withLitHtml(FrameElement) {
+    render() {
+        return html`<h1>Hello World!</h1>`
     }
+}
 
-    customElements.define('hello-world', HelloWorld);
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Using preact renderer
@@ -94,64 +94,64 @@ To be able to use JSX you need to either use babel (output to es6) or typescript
 npm install @framejs/renderer-preact
 ```
 ```tsx
-    import { FrameElement } from '@framejs/core';
-    import { withPreact, h } from '@framejs/renderer-preact';
+import { FrameElement } from '@framejs/core';
+import { withPreact, h } from '@framejs/renderer-preact';
 
-    class HelloWorld extends withPreact(FrameElement) {
-        render() {
-            return <h1>Hello World!</h1>
-        }
+class HelloWorld extends withPreact(FrameElement) {
+    render() {
+        return <h1>Hello World!</h1>
     }
+}
 
-    customElements.define('hello-world', HelloWorld);
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Callback after first render and on destroy
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        elementDidMount() {
-            console.log('Hello!');
-        }
-
-        elementDidUnmount() {
-            console.log('Bye!')
-        }
-
-        render() {
-            return `Hello World!`
-        }
+class HelloWorld extends FrameElement {
+    elementDidMount() {
+        console.log('Hello!');
     }
 
-    customElements.define('hello-world', HelloWorld);
+    elementDidUnmount() {
+        console.log('Bye!')
+    }
+
+    render() {
+        return `Hello World!`
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using properties
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        static get props() {
-            return {
-                greeting: 'Hello World!'
-            }
-        }
-
-        static get propTypes() {
-            return {
-                greeting: String
-            }
-        }
-
-        render() {
-            return `${this.props.greeting}`;
+class HelloWorld extends FrameElement {
+    static get props() {
+        return {
+            greeting: 'Hello World!'
         }
     }
 
-    customElements.define('hello-world', HelloWorld);
+    static get propTypes() {
+        return {
+            greeting: String
+        }
+    }
+
+    render() {
+        return `${this.props.greeting}`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using attribute reflections
@@ -159,68 +159,68 @@ This sets the attribute `greeting="Hello World!"` on the element.
 Changing the attribute on the element updates the `prop` and triggers are re-render.
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        static get props() {
-            return {
-                greeting: 'Hello World!'
-            };
-        }
-
-        static get propTypes() {
-            return {
-                greeting: String
-            };
-        }
-
-        static get reflectedProps() {
-            return ['greeting'];
-        }
-
-        render() {
-            return `${this.props.greeting}`;
-        }
+class HelloWorld extends FrameElement {
+    static get props() {
+        return {
+            greeting: 'Hello World!'
+        };
     }
 
-    customElements.define('hello-world', HelloWorld);
+    static get propTypes() {
+        return {
+            greeting: String
+        };
+    }
+
+    static get reflectedProps() {
+        return ['greeting'];
+    }
+
+    render() {
+        return `${this.props.greeting}`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using Prop Observers
 Prop observers are running every time a specified prop changes
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        static get props() {
-            return {
-                greeting: 'Hello World!'
-            };
-        }
-
-        static get propTypes() {
-            return {
-                greeting: String
-            };
-        }
-
-        static get propObservers() {
-            return {
-                greeting: '_greetingObserver'
-            };
-        }
-
-        _greetingObserver(oldValue, newValue) {
-            console.log(oldValue, newValue)
-        }
-
-        render() {
-            return `${this.props.greeting}`;
-        }
+class HelloWorld extends FrameElement {
+    static get props() {
+        return {
+            greeting: 'Hello World!'
+        };
     }
 
-    customElements.define('hello-world', HelloWorld);
+    static get propTypes() {
+        return {
+            greeting: String
+        };
+    }
+
+    static get propObservers() {
+        return {
+            greeting: '_greetingObserver'
+        };
+    }
+
+    _greetingObserver(oldValue, newValue) {
+        console.log(oldValue, newValue)
+    }
+
+    render() {
+        return `${this.props.greeting}`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using event listeners
@@ -231,64 +231,64 @@ The syntax for a listener is:
 * `'Event:#child` - event listener on child element. the string after `:` is used for selecting the element.
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        static get props() {
-            return {
-                greeting: 'Hello World!'
-            };
-        }
-
-        static get propTypes() {
-            return {
-                greeting: String
-            };
-        }
-
-        static get eventListeners() {
-            return {
-                'click': '_handleClick',
-                'click:#myButton': '_handleButtonClick'
-            };
-        }
-
-        _handleClick(event) {
-            console.log(event, 'element clicked!')
-        }
-
-        _handleButtonClick(event) {
-            console.log(event, 'button clicked!')
-        }
-
-        render() {
-            return `${this.props.greeting} <button id="myButton">Click me!</button>`;
-        }
+class HelloWorld extends FrameElement {
+    static get props() {
+        return {
+            greeting: 'Hello World!'
+        };
     }
 
-    customElements.define('hello-world', HelloWorld);
+    static get propTypes() {
+        return {
+            greeting: String
+        };
+    }
+
+    static get eventListeners() {
+        return {
+            'click': '_handleClick',
+            'click:#myButton': '_handleButtonClick'
+        };
+    }
+
+    _handleClick(event) {
+        console.log(event, 'element clicked!')
+    }
+
+    _handleButtonClick(event) {
+        console.log(event, 'button clicked!')
+    }
+
+    render() {
+        return `${this.props.greeting} <button id="myButton">Click me!</button>`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Setting style that supports ShadyCSS if polyfill is loaded and needed
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        static get style() {
-            return `
-                :host {
-                    color: dodgerBlue;
-                }
-            `;
-        }
-
-        render() {
-            return `Hello World!`;
-        }
+class HelloWorld extends FrameElement {
+    static get style() {
+        return `
+            :host {
+                color: dodgerBlue;
+            }
+        `;
     }
 
-    customElements.define('hello-world', HelloWorld);
+    render() {
+        return `Hello World!`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 If you are using [lit-html renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-lit-html) you need to add style to the render function to ensure the style to be loaded correctly and available for ShadyCSS.
@@ -297,34 +297,34 @@ If you are using [lit-html renderer](https://github.com/framejs/framejs/tree/mas
 import { FrameElement } from '@framejs/core';
 import { withLitHtml, html } from '@framejs/renderer-lit';
 
-    class HelloWorld extends FrameElement {
-        static get style() {
-            return `
-                :host {
-                    color: dodgerBlue;
-                }
-            `;
-        }
-
-        render() {
-            return html`
-                <style>${this.constructor.style}</style>
-                Hello World!`;
-        }
+class HelloWorld extends FrameElement {
+    static get style() {
+        return `
+            :host {
+                color: dodgerBlue;
+            }
+        `;
     }
 
-    customElements.define('hello-world', HelloWorld);
+    render() {
+        return html`
+            <style>${this.constructor.style}</style>
+            Hello World!`;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Custom element without shadow dom
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        _shadow = false;
-    }
+class HelloWorld extends FrameElement {
+    _shadow = false;
+}
 
-    customElements.define('hello-world', HelloWorld);
+customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Prevent re-render on prop changes
@@ -332,13 +332,34 @@ import { withLitHtml, html } from '@framejs/renderer-lit';
 Manually trigger re-render by using `this.invalidate();`
 
 ```js
-    import { FrameElement } from '@framejs/core';
+import { FrameElement } from '@framejs/core';
 
-    class HelloWorld extends FrameElement {
-        _invalidateOnPropChanges = false;
+class HelloWorld extends FrameElement {
+    _invalidateOnPropChanges = false;
+}
+
+customElements.define('hello-world', HelloWorld);
+```
+
+### Access element properties and methods from Destructuring
+`this` is passed to render(), but you can still reference them manually via `this`.
+
+```js
+import { FrameElement } from '@framejs/core';
+
+class HelloWorld extends FrameElement {
+    static get props() {
+        return {
+            greeting: 'Hello'
+        }
     }
+    
+    render({ greeting }) {
+        return `${greeting} World!`
+    }
+}
 
-    customElements.define('hello-world', HelloWorld);
+customElements.define('hello-world', HelloWorld);
 ```
 
 
