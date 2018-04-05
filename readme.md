@@ -1,234 +1,353 @@
-# Framejs
+# FrameJS
 
-An ultra light typescript library for writing custom elements.
+Welcome to FrameJS! This documentation is created to help answer any questions you may have about what FrameJS is, how to use it and what its APIs are.
 
-### Ultra light
-Less than 1.5kb (gzipped) when using all decorators in a custom element.
+### A web component library for building reusable elements
+Build encapsulated elements that manages their own state, then reuse them in any web project to make complex UIs.
+With it's small size (~1.5kb gzipped) it fits well for simple elements as well for complex modules.
 
-### Simple, yet powerful
-This framework utilizes only typescript, and has no dependencies on any CLI or specific build tooling.
+### Why FrameJS?
+FrameJS was created to solve design and UI implementation across multiple projects and frameworks, not only to share style, but to share the experience of well crafted UI.
 
-### A library, not a framework
-This library aims to ease the developer experience when writing custom elements, and to fit in to any build system.
+An element created using FrameJS is just a regular web component, but with the magic of automatic updates on changing properties and attributes and helpful features to make the custom elements API an enjoyable experience.
 
-## Installing
-Install from NPM:
+## Try FrameJS
+
+Try FrameJS online or set up your local development environment.
+
+### Online
+If you’re just interested in playing around with FrameJS, you can use an online code playground. Try a Hello World template on [Stackblitz](https://stackblitz.com/edit/framejs?file=index.js)
+
+Other Hello World templates:
+* [FrameJS + lit-html](https://stackblitz.com/edit/framejs-lit-html?file=index.html)
+* [FrameJS + preact](https://stackblitz.com/edit/framejs-preact?file=index.js)
+* [FrameJS + preact + typescript](https://stackblitz.com/edit/framejs-typescript-preact?file=index.tsx)
+
+### Local development
+
+#### Prequisitions
+
+FrameJS requires a recent LTS version of NodeJS and npm. Make sure you've installed and/or updated Node before continuing.
+
+While FrameJS is just Javascript (es6) it can be built without a build pipeline, but it's recommended to setting up tools to bundle and minify for production. A modern build pipeline typically consists of:
+
+* A package manager, such as Yarn or npm. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.
+
+* A bundler, such as webpack or Browserify. It lets you write modular code and bundle it together into small packages to optimize load time.
+
+> Web components only works in es6 natively, and es5 and es6 components cannot be mixed in the same runtime, so you should ship components as es6 modules, and let the consumer application compile to es5 if needed.
+
+#### Usage
+
+Install with npm
+
 ```sh
 npm install @framejs/core
 ```
 
-## Decorators
+```javascript
+// hello-world.js
+import { FrameElement } from './node_modules/@framejs/core/dist/frame-element.js';
 
-### @CustomElement({{tag: string, style?: string, shadow?: boolean = true, mode?: 'open' | 'closed'}})
-The main decorator that holds state provides a renderer (this is needed in order to use the rest of the decorators).
-
-To manually run the renderer use: `this.renderer();`
-
-To auto-render on `@Attr` and `@Prop` changes set `this._renderOnPropertyChange = true`.
-This should only be done with a smart renderer function. it's enabled by default when extending renderer-preact or renderer-lit.
-
-```ts
-import { CustomElement } from '@framejs/core';
-
-@CustomElement({
-    tag: 'my-element',
-    style: ':host { color: blue; }'
-})
-class MyElement extends HTMLElement {
-    render() {
-        return `Hello World!`;
-    }
+class HelloWorld extends FrameElement {
+  render() {
+    return `<h1>Hello World!</h1>`
+  }
 }
+
+customElements.define('hello-world', HelloWorld);
+```
+```html
+<!-- index.html -->
+<hello-world></hello-world>
+<script type="module" src="./hello-world.js">
 ```
 
-### @Attribute() [property]: string | boolean
-Decorates the element with an attribute setter and getter and updates state/render on change. Updating the property from within the element or externally will update the attribute in the rendered HTML and the other way around.
+> The default render function replaces innerHTML, and it's recommended to use an advanced renderer like the [lit-html renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-lit-html) or [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact). See [examples on stackblitz](https://stackblitz.com/@emolr)
 
-Providing a default value will set the attribute when the element is ready. If the attribute is already set by the user, the default will be overwritten.
+## Examples
 
-```ts
-import { CustomElement, Attribute } from '@framejs/core';
+These examples expects that you are using a module bundler of some kind.
 
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Attribute() target: string = 'World!'
+### Using lit html renderer
+```javascript
+    import { FrameElement } from '@framejs/core';
+    import { withLitHtml, html } from '@framejs/renderer-lit-html';
 
-    render() {
-        return `Hello ${this.target}`;
+    class HelloWorld extends withLitHtml(FrameElement) {
+        render() {
+            return html`<h1>Hello World!</h1>`
+        }
     }
-}
+
+    customElements.define('hello-world', HelloWorld);
 ```
 
-### @Property() [property]: any
-Decorates the element with a property setter and getter and updates state/render on change.
-This value will not be reflected in the rendered HTML as an attribute.
-
-```ts
-import { CustomElement, Property } from '@framejs/core';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Property() data: string[] = ['Hello', 'world!'];
-
-    render() {
-        return `
-            ${this.data.map(word => {
-                return word;
-            }).join(' ')}
-        `;
-    }
-}
-```
-
-### @Observe(property: string) Function(oldValue: any, newValue: any)
-The function provided will get triggered when the property changes with the old and new value.
-
-```ts
-import { CustomElement, Property, Observe } from '@framejs/core';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Property() data: string[] = ['Hello', 'world!'];
-
-    @Observe('data')
-    dataChangedHandler(oldValue, newValue) {
-        // Do something with the new data entry
-    }
-
-    render() {
-        return `
-            ${this.data.map(word => {
-                return word;
-            }).join(' ')}
-        `;
-    }
-}
-```
-
-### @Event() [property]: EventEmitter
-Creates a simple event emitter.
-
-```ts
-import { CustomElement, Emit, EventEmitter } from '@framejs/core';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Event() isReady: EventEmitter;
-
-    connectedCallback() {
-        this.isReady.emit('my-element is ready!')
-    }
-}
-```
-
-### @Listen(event: string, target?: window | document) Function
-Listens for events and executes the nested logic.
-
-```ts
-import { CustomElement, Listen } from '@framejs/core';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Listen('click')
-    clickedOnInstanceHandler(event) {
-        console.log(event)
-    }
-
-    @Listen('resize', window)
-    windowResizeHandler(event) {
-        console.log(event)
-    }
-}
-```
-
-It's also possible to listen for events from child elements
-
-```ts
-import { CustomElement, Listen } from '@framejs/core';
-import './my-other-element';
-
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends HTMLElement {
-    @Listen('onOtherElementClicked')
-    onOtherElementClickedHandler(event) {
-        console.log(event.detail)
-    }
-
-    render() {
-        return `
-            // my-other-element emits an customEvent called 'onOtherElementClicked'.
-            <my-other-element></my-other-element>
-        `;
-    }
-}
-```
-
-## Using @framejs/renderer-preact
-
-FrameJS rendererer for [Preact](https://preactjs.com/).
-
-### Install
-
-```sh
-$ npm install @framejs/core @framejs/renderer-preact
-```
-
-### Usage
+### Using preact renderer
+To be able to use JSX you need to either use babel (output to es6) or typescript. This examples are using typescript with `--jsx --jsxFactory h` .
 
 ```tsx
-import { CustomElement } from '@framejs/core';
-import { withPreact, h } from '@framejs/renderer-preact';
+    import { FrameElement } from '@framejs/core';
+    import { withPreact, h } from '@framejs/renderer-preact';
 
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends withPreact(HTMLElement) {
-    @Attribute() checked = true;
-
-    render() {
-        return <div>Am i checked? {this.checked ? 'Yup' : 'Nope'}</div>
+    class HelloWorld extends withPreact(FrameElement) {
+        render() {
+            return <h1>Hello World!</h1>
+        }
     }
-}
+
+    customElements.define('hello-world', HelloWorld);
 ```
 
-## Using lit-html renderer
+### Example: Using properties
 
-FrameJS rendererer for [lit-html](https://github.com/Polymer/lit-html).
+```js
+    import { FrameElement } from '@framejs/core';
 
-`lit-html` is a great templating extension when working with complex elements.
-Read more about [lit-html](https://github.com/Polymer/lit-html).
+    class HelloWorld extends FrameElement {
+        static get props() {
+            return {
+                greeting: 'Hello World!'
+            }
+        }
 
-### Install
+        static get propTypes() {
+            return {
+                greeting: String
+            }
+        }
 
-```sh
-$ npm install @framejs/core @framejs/renderer-lit-html
+        render() {
+            return `${this.props.greeting}`;
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
 ```
 
-### Usage
+### Example: Using attribute reflections
+This sets the attribute `greeting="Hello World!"` on the element. 
+Changing the attribute on the element updates the `prop` and triggers are re-render.
 
-```ts
-import { CustomElement } from '@framejs/core';
-import { withLitHtml, html } from '@framejs/renderer-lit-html';
+```js
+    import { FrameElement } from '@framejs/core';
 
-@CustomElement({
-    tag: 'my-element'
-})
-class MyElement extends withLitHtml(HTMLElement) {
-    render() {
-        return html`I\m so lit!`;
+    class HelloWorld extends FrameElement {
+        static get props() {
+            return {
+                greeting: 'Hello World!'
+            };
+        }
+
+        static get propTypes() {
+            return {
+                greeting: String
+            };
+        }
+
+        static get reflectedProps() {
+            return ['greeting'];
+        }
+
+        render() {
+            return `${this.props.greeting}`;
+        }
     }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Using Prop Observers
+Prop observers are running every time a specified prop changes
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        static get props() {
+            return {
+                greeting: 'Hello World!'
+            };
+        }
+
+        static get propTypes() {
+            return {
+                greeting: String
+            };
+        }
+
+        static get propObservers() {
+            return {
+                greeting: '_greetingObserver'
+            };
+        }
+
+        _greetingObserver(oldValue, newValue) {
+            console.log(oldValue, newValue)
+        }
+
+        render() {
+            return `${this.props.greeting}`;
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Using event listeners
+Event listeners get added on connectedCallback and removed on disconnectedCallback.
+
+The syntax for a listener is:
+* `'Event'` - event listener on element
+* `'Event:#child` - event listener on child element. the string after `:` is used for selecting the element.
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        static get props() {
+            return {
+                greeting: 'Hello World!'
+            };
+        }
+
+        static get propTypes() {
+            return {
+                greeting: String
+            };
+        }
+
+        static get eventListeners() {
+            return {
+                'click': '_handleClick',
+                'click:#myButton': '_handleButtonClick'
+            };
+        }
+
+        _handleClick(event) {
+            console.log(event, 'element clicked!')
+        }
+
+        _handleButtonClick(event) {
+            console.log(event, 'button clicked!')
+        }
+
+        render() {
+            return `${this.props.greeting} <button id="myButton">Click me!</button>`;
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Setting style that supports ShadyCSS if polyfill is loaded and needed
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        static get style() {
+            return `
+                :host {
+                    color: dodgerBlue;
+                }
+            `;
+        }
+
+        render() {
+            return `Hello World!`;
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Custom element without shadow dom
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        _shadow = false;
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Prevent re-render on prop changes
+
+Manually trigger re-render by using `this.invalidate();`
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        _invalidateOnPropChanges = false;
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Callback after first render and on destroy
+
+```js
+    import { FrameElement } from '@framejs/core';
+
+    class HelloWorld extends FrameElement {
+        elementDidMount() {
+            console.log('Hello!');
+        }
+
+        elementDidUnmount() {
+            console.log('Bye!')
+        }
+
+        render() {
+            return `Hello World!`
+        }
+    }
+
+    customElements.define('hello-world', HelloWorld);
+```
+
+
+## Extentions for typescript
+It's possible to use type reflection if loading the [reflect-metadata](https://www.npmjs.com/package/reflect-metadata) polyfill, alternatively pass in type to `@Attribute({type: String})`;
+
+`@Attribute()` automatically gets reflected as attributes and can be of type: `String` | `Boolean` | `Number`.
+
+`@Attribute() myProp: String;` will be set as attribute `my-prop`;
+
+```tsx
+import { 
+    Define, 
+    FrameElement,
+    Property,
+    Attribute,
+    Listen,
+    Observe,
+    Event,
+    EventEmitter
+} from '@framejs/core';
+
+@Define({
+    tag: 'hello-world',
+    style: `:host { color: dodgerBlue; }`,
+    shadow: true,
+    mode: 'open'
+})
+class HelloWorld extends FrameElement {
+    @Property() greeting: String = 'Hello';
+    @Attribute() target: String = 'World'!
+    @Event() targetChanged: EventEmitter;
+    @Observe('target')
+    _handleTargetChange(oldValue, newValue) {
+        this.targetChanged.emit(newValue);
+    }
+    @Listen('click')
+    _handleClick(event) {
+        console.log('clicked!')
+    }
+
 }
 ```
 
