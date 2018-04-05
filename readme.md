@@ -386,7 +386,8 @@ import {
     tag: 'hello-world',
     style: `:host { color: dodgerBlue; }`,  // optional
     shadow: true,                           // default true
-    mode: 'open'                            // default true
+    mode: 'open',                           // default 'open'
+    invalidateOnPropChanges: true           // default true
 })
 class HelloWorld extends FrameElement {
     @Property() greeting: String = 'Hello';

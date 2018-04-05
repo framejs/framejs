@@ -18,6 +18,7 @@ export interface CustomElementOptionsType {
     style?: string;
     shadow?: boolean;
     mode?: 'open' | 'closed';
+    invalidateOnPropChanges?: boolean;
 }
 
 export const Define = (options: CustomElementOptionsType): any => {
@@ -25,6 +26,9 @@ export const Define = (options: CustomElementOptionsType): any => {
         const Klass = class extends target {
             public _shadow = options.shadow ? options.shadow : true;
             public _shadowMode = options.mode ? options.mode : 'open';
+            public _invalidateOnPropChanges = options.invalidateOnPropChanges
+                ? options.invalidateOnPropChanges
+                : 'true';
             static style = options.style ? options.style : '';
         };
         customElements.define(options.tag, Klass);
