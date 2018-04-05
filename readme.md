@@ -69,43 +69,6 @@ customElements.define('hello-world', HelloWorld);
 
 These examples expects that you are using a module bundler of some kind.
 
-### Using lit html renderer
-
-```sh
-npm install @framejs/renderer-lit-html
-```
-```javascript
-import { FrameElement } from '@framejs/core';
-import { withLitHtml, html } from '@framejs/renderer-lit-html';
-
-class HelloWorld extends withLitHtml(FrameElement) {
-    render() {
-        return html`<h1>Hello World!</h1>`
-    }
-}
-
-customElements.define('hello-world', HelloWorld);
-```
-
-### Using preact renderer
-To be able to use JSX you need to either use babel (output to es6) or typescript. This examples are using typescript with `--jsx --jsxFactory h` .
-
-```sh
-npm install @framejs/renderer-preact
-```
-```tsx
-import { FrameElement } from '@framejs/core';
-import { withPreact, h } from '@framejs/renderer-preact';
-
-class HelloWorld extends withPreact(FrameElement) {
-    render() {
-        return <h1>Hello World!</h1>
-    }
-}
-
-customElements.define('hello-world', HelloWorld);
-```
-
 ### Example: Callback after first render and on destroy
 
 ```js
@@ -407,6 +370,44 @@ class HelloWorld extends FrameElement {
 ```
 
 > If you are unsure about the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/vanillajs/packages/core/tsconfig.json) used in FrameJS.
+
+## Using a renderer
+### Using lit html renderer
+
+```sh
+npm install @framejs/renderer-lit-html
+```
+```javascript
+import { FrameElement } from '@framejs/core';
+import { withLitHtml, html } from '@framejs/renderer-lit-html';
+
+class HelloWorld extends withLitHtml(FrameElement) {
+    render() {
+        return html`<h1>Hello World!</h1>`
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
+```
+
+### Using preact renderer
+To be able to use JSX you need to either use babel (output to es6) or typescript. This examples are using typescript with `--jsx --jsxFactory h` .
+
+```sh
+npm install @framejs/renderer-preact
+```
+```tsx
+import { FrameElement } from '@framejs/core';
+import { withPreact, h } from '@framejs/renderer-preact';
+
+class HelloWorld extends withPreact(FrameElement) {
+    render() {
+        return <h1>Hello World!</h1>
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
+```
 
 ## Write a custom renderer
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
