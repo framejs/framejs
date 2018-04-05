@@ -65,6 +65,10 @@ customElements.define('hello-world', HelloWorld);
 
 > The default render function replaces innerHTML, and it's recommended to use an advanced renderer like the [lit-html renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-lit-html) or [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact). See [examples on stackblitz](https://stackblitz.com/@emolr)
 
+#### Polyfills
+
+For more information on the polyfills, see the [web components polyfill documentation](https://github.com/webcomponents/webcomponentsjs).
+
 ## Examples
 
 These examples expects that you are using a module bundler of some kind.
@@ -413,7 +417,3 @@ customElements.define('hello-world', HelloWorld);
 The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
 
 See the code for [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts) for implementation details.
-
-## Polyfills
-
-For more information on the polyfills, see the [web components polyfill documentation](https://github.com/webcomponents/webcomponentsjs).
