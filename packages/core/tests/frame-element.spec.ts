@@ -23,11 +23,11 @@ class MyElement extends FrameElement {
     public hasMounted = false;
     public hasUnmounted = false;
 
-    componentDidMount() {
+    elementDidMount() {
         this.hasMounted = true;
     }
 
-    componentDidUnmount() {
+    elementDidUnmount() {
         this.hasUnmounted = true;
     }
 
@@ -140,14 +140,14 @@ describe('FrameElement', () => {
         });
     });
 
-    it('ComponentDidMount run after initial render', done => {
+    it('ElementDidMount run after initial render', done => {
         setTimeout(() => {
             assert.equal(myElementInstance.hasMounted, true);
             done();
         });
     });
 
-    it('ComponentDidUnmount run after dom removal', done => {
+    it('ElementDidUnmount run after dom removal', done => {
         setTimeout(() => {
             myElementInstance.remove();
             setTimeout(() => {

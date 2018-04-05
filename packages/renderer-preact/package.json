@@ -1,12 +1,13 @@
 {
   "name": "@framejs/renderer-preact",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.4",
   "description": "A Framejs renderer for preact",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/renderer-preact.js",
+  "types": "dist/renderer-preact.d.ts",
   "scripts": {
-    "build": "node ./node_modules/typescript/bin/tsc && npm run bundle",
-    "bundle": "node node_modules/rollup/bin/rollup dist/index.js -f es -o dist/index.js",
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "bundle": "node node_modules/rollup/bin/rollup dist/renderer-preact.js -f iife -g preact:h,preact:render -n rendererPreact -o dist/renderer-preact.js",
+    "bundle:esm": "node node_modules/rollup/bin/rollup dist/renderer-preact.js -f es -o dist/renderer-preact.esm.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {

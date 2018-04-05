@@ -1,2 +1,2 @@
-export * from './frame-element.js';
-export * from './frame-decorators.js';
+export { FrameElement } from './frame-element.js';
+export { CustomElement, Property, Attribute, Observe, Listen, Event } from './frame-decorators.js';

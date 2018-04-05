@@ -126,7 +126,7 @@ export class FrameElement extends HTMLElement {
     }
 
     public disconnectedCallback(): void {
-        this._componentCallback('componentDidUnmount');
+        this._elementCallback('elementDidUnmount');
         this._configureListeners(false);
     }
 
@@ -169,7 +169,7 @@ export class FrameElement extends HTMLElement {
         }
     }
 
-    private _componentCallback(event: string): void {
+    private _elementCallback(event: string): void {
         if (this[event]) {
             this[event]();
         }
@@ -202,7 +202,7 @@ export class FrameElement extends HTMLElement {
 
             if (!this._hasValidated) {
                 this._configureListeners();
-                this._componentCallback('componentDidMount');
+                this._elementCallback('elementDidMount');
                 this._applyStyle();
             }
 
@@ -236,7 +236,7 @@ export class FrameElement extends HTMLElement {
     }
 
     private renderer(): void {
-        if ((<any>this).render()) {
+        if ((<any>this).render) {
             const root = this.shadowRoot ? this.shadowRoot : this;
             root.innerHTML = (<any>this).render();
         }
