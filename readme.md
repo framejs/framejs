@@ -378,6 +378,9 @@ class HelloWorld extends FrameElement {
 ## Using a renderer
 ### Using lit html renderer
 
+[lit-html example on Stackblitz](https://stackblitz.com/edit/framejs-lit-html?file=index.js)
+
+
 ```sh
 npm install @framejs/renderer-lit-html
 ```
@@ -396,6 +399,8 @@ customElements.define('hello-world', HelloWorld);
 
 ### Using preact renderer
 To be able to use JSX you need to either use babel (output to es6) or typescript. This example is using typescript with `--jsx --jsxFactory h` .
+
+[Preact example on Stackblitz](https://stackblitz.com/edit/framejs-preact?file=index.js)
 
 ```sh
 npm install @framejs/renderer-preact
