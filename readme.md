@@ -391,7 +391,7 @@ customElements.define('hello-world', HelloWorld);
 ```
 
 ### Using preact renderer
-To be able to use JSX you need to either use babel (output to es6) or typescript. This examples are using typescript with `--jsx --jsxFactory h` .
+To be able to use JSX you need to either use babel (output to es6) or typescript. This example is using typescript with `--jsx --jsxFactory h` .
 
 ```sh
 npm install @framejs/renderer-preact
