@@ -19,7 +19,7 @@ Try FrameJS online or set up your local development environment.
 If you’re just interested in playing around with FrameJS, you can use an online code playground. Try a Hello World template on [Stackblitz](https://stackblitz.com/edit/framejs?file=index.js)
 
 Other Hello World templates on stackblitz:
-* [FrameJS + lit-html](https://stackblitz.com/edit/framejs-lit-html?file=index.html)
+* [FrameJS + lit-html](https://stackblitz.com/edit/framejs-lit-html?file=index.js)
 * [FrameJS + preact](https://stackblitz.com/edit/framejs-preact?file=index.js)
 * [FrameJS + preact + typescript](https://stackblitz.com/edit/framejs-typescript-preact?file=index.tsx)
 
@@ -384,9 +384,9 @@ import {
 
 @Define({
     tag: 'hello-world',
-    style: `:host { color: dodgerBlue; }`,
-    shadow: true,
-    mode: 'open'
+    style: `:host { color: dodgerBlue; }`,  // optional
+    shadow: true,                           // default true
+    mode: 'open'                            // default true
 })
 class HelloWorld extends FrameElement {
     @Property() greeting: String = 'Hello';
@@ -400,7 +400,6 @@ class HelloWorld extends FrameElement {
     _handleClick(event) {
         console.log('clicked!')
     }
-
 }
 ```
 
