@@ -210,12 +210,6 @@ export class FrameElement extends HTMLElement {
         }
     }
 
-    // Depricated
-    public _invalidate(): void {
-        console.warn('_invalidate() is depricated. Use invalidate() in the future.');
-        this.invalidate();
-    }
-
     private _applyStyle(): void {
         const style = (this.constructor as any).style;
 

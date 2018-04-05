@@ -1,6 +1,6 @@
 {
   "name": "@framejs/renderer-preact",
-  "version": "1.0.0-rc.5",
+  "version": "1.0.0",
   "description": "A Framejs renderer for preact",
   "main": "dist/renderer-preact.js",
   "types": "dist/renderer-preact.d.ts",
