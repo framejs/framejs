@@ -195,7 +195,7 @@ customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using event listeners
-Event listeners get added on connectedCallback and removed on disconnectedCallback.
+Event listeners is added on connectedCallback and removed on disconnectedCallback.
 
 The syntax for a listener is:
 * `'Event'` - event listener on element
