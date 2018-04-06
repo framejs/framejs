@@ -1,22 +1,24 @@
 # FrameJS
 
-Welcome to FrameJS! This documentation is created to help answer any questions you may have about what FrameJS is, how to use it and what its APIs are.
+Welcome to FrameJS! This documentation tries to help answer any questions you may have about what FrameJS is, how to use it and what its APIs are.
 
 ### A web component library for building reusable elements
 Build encapsulated elements that manages their own state, then reuse them in any web project to make complex UIs.
 With it's small size (~1.5kb gzipped) it fits well for simple elements as well as for complex components.
 
 ### Why FrameJS?
-FrameJS was created to solve design and UI implementations across multiple projects and frameworks, not only to share style, but to share the experience of well crafted UI.
+FrameJS tries to make it easy and safe to build UI elements you can use across projects and frameworks.
 
-An element created using FrameJS is just a regular web component, but with the magic of automatic updates on properties and attributes changes and helpful features to make the custom elements API an enjoyable experience to use.
+It doesn't rely on specific build pipelines or compilers, so it fits right in to existing projects. It supports and provides decorators for Typescript, using JSX and other templating languages. And you can choose to use features like shadow dom and rendering per elements as fits.
+
+It won't stop you from using any existing techniques for custom elements. It's purpose is to aid you as a developer by providing tested functionality and speed up your work.
 
 ## Try FrameJS
 
 Try FrameJS online or set up your local development environment.
 
 ### Online
-If you’re just interested in playing around with FrameJS, you can use an online code playground. Try a Hello World template on [Stackblitz](https://stackblitz.com/edit/framejs?file=index.js)
+If you’re interested in playing around with FrameJS, you can use an online code playground. Try a Hello World template on [Stackblitz](https://stackblitz.com/edit/framejs?file=index.js)
 
 Other Hello World templates on stackblitz:
 * [FrameJS + lit-html](https://stackblitz.com/edit/framejs-lit-html?file=index.js)
@@ -27,15 +29,15 @@ Other Hello World templates on stackblitz:
 
 #### Prequisitions
 
-FrameJS requires a recent LTS version of NodeJS and npm. Make sure you've installed and/or updated Node before continuing.
+Make sure you've installed and/or updated Node before continuing.
 
-While FrameJS is just Javascript (es6) it can be built without a build pipeline, but it's recommended to setting up tools to bundle and minify for production. A modern build pipeline typically consists of:
+It's recommended to setting up tools to bundle and minify for production. A modern build pipeline typically consists of:
 
 * A package manager, such as Yarn or npm. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.
 
 * A bundler, such as webpack or Browserify. It lets you write modular code and bundle it together into small packages to optimize load time.
 
-> Web components only works in es6 natively, and es5 and es6 components cannot be mixed in the same runtime, so you should ship components as es6 modules, and let the consumer application compile to es5 if needed.
+> The custom elements API dictates elements to we written as es6 classes. Good practice is to let a consumer application transform the code to es5, or compile to both. The browser runtime cannot mix es5 and es6 custom elements.
 
 #### Usage
 
@@ -253,29 +255,6 @@ class HelloWorld extends FrameElement {
     }
 
     render() {
-        return `Hello World!`;
-    }
-}
-
-customElements.define('hello-world', HelloWorld);
-```
-
-> If you haven't set `this._invalidateOnPropChanges = false` or are using [preact renderer](https://github.com/framejs/framejs/tree/master/packages/renderer-preact) you need to add style to the render function to ensure the style to be loaded correctly on every render cycle and initially available for ShadyCSS.
-
-```js
-import { FrameElement } from '@framejs/core';
-import { withLitHtml, html } from '@framejs/renderer-lit';
-
-class HelloWorld extends FrameElement {
-    static get style() {
-        return `
-            :host {
-                color: dodgerBlue;
-            }
-        `;
-    }
-
-    render() {
         return html`
             <style>${this.constructor.style}</style>
             Hello World!`;
@@ -284,6 +263,8 @@ class HelloWorld extends FrameElement {
 
 customElements.define('hello-world', HelloWorld);
 ```
+
+> You should not set `<style>` in the template if you are using vdom like [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts)
 
 ### Example: Custom element without shadow dom
 ```js
