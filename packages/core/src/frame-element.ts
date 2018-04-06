@@ -177,10 +177,20 @@ export class FrameElement extends HTMLElement {
 
     private _configureListeners(add: boolean = true): void {
         const listeners = (this.constructor as any).eventListeners;
+        if (!listeners) {
+            return;
+        }
+
         Object.keys(listeners).forEach(key => {
             const eventArray = key.split(':');
             const root = this.shadowRoot ? this.shadowRoot : this;
             const target = eventArray[1] ? root.querySelector(eventArray[1]) : this;
+
+            if (!target) {
+                console.error("Event selector target doesn't exist.");
+                return;
+            }
+
             if (add) {
                 target.addEventListener(eventArray[0], e => this[listeners[key]](e));
             } else {

@@ -43,10 +43,10 @@ export const Property = (options?: IPropOptions): any => {
 
 export const Attribute = (options?: IPropOptions): any => {
     return (target: any, propName: any) => {
-        if (!target.constructor.propTypes) {
+        if (!target.constructor.hasOwnProperty('propTypes')) {
             target.constructor.propTypes = {};
         }
-        if (!target.constructor.reflectedProps) {
+        if (!target.constructor.hasOwnProperty('reflectedProps')) {
             target.constructor.reflectedProps = [];
         }
         target.constructor.reflectedProps = [...target.constructor.reflectedProps, propName];
@@ -58,7 +58,7 @@ export const Attribute = (options?: IPropOptions): any => {
 
 export const Observe = (propName: string): any => {
     return (target, methodName) => {
-        if (!target.constructor.propObservers) {
+        if (!target.constructor.hasOwnProperty('propObservers')) {
             target.constructor.propObservers = {};
         }
         target.constructor.propObservers[propName] = methodName;
@@ -67,7 +67,7 @@ export const Observe = (propName: string): any => {
 
 export const Listen = (eventString: string): any => {
     return (target, methodName) => {
-        if (!target.constructor.eventListeners) {
+        if (!target.constructor.hasOwnProperty('eventListeners')) {
             target.constructor.eventListeners = {};
         }
 
@@ -87,10 +87,13 @@ export const Event = (): any => {
             get: function() {
                 const host = this;
                 const emit = function(value) {
-                    const event = new CustomEvent(name, {
+                    const eventOptions: any = {
                         detail: value,
-                        bubbles: true
-                    });
+                        bubbles: true,
+                        composed: true
+                    };
+
+                    const event: any = new CustomEvent(name, eventOptions);
 
                     host.dispatchEvent(event);
                 };

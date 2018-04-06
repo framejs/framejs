@@ -25,6 +25,9 @@ Other Hello World templates on stackblitz:
 * [FrameJS + preact](https://stackblitz.com/edit/framejs-preact?file=index.js)
 * [FrameJS + preact + typescript](https://stackblitz.com/edit/framejs-typescript-preact?file=index.tsx)
 
+Demos on stackblitz:
+* [todo-app (FrameJS + typescript + Preact)](https://stackblitz.com/edit/framejs-typescript-preact-todo-example?file=framejs-todo.tsx)
+
 ### Local development
 
 #### Prequisitions
@@ -354,7 +357,7 @@ class HelloWorld extends FrameElement {
 }
 ```
 
-> If you are unsure about the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/vanillajs/packages/core/tsconfig.json) used in FrameJS.
+> If you are unsure about the typescript configuration, take a look at the [tsconfig.json](https://github.com/framejs/framejs/blob/master/packages/core/tsconfig.json) used in FrameJS.
 
 ## Using a renderer
 ### Using lit html renderer
