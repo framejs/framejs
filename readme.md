@@ -3,15 +3,15 @@
 Welcome to FrameJS! This documentation tries to help answer any questions you may have about what FrameJS is, how to use it and what its APIs are.
 
 ### A web component library for building reusable elements
-Build encapsulated elements that manages their own state, then reuse them in any web project to make complex UIs.
-With it's small size (~1.5kb gzipped) it fits well for simple elements as well as for complex components.
+Build encapsulated elements that manage their own state, then reuse them in any web project to make complex UIs.
+With its small size (~1.5kb gzipped) it fits well for simple elements as well as for complex components.
 
 ### Why FrameJS?
 FrameJS tries to make it easy and safe to build UI elements you can use across projects and frameworks.
 
-It doesn't rely on specific build pipelines or compilers, so it fits right in to existing projects. It supports and provides decorators for Typescript, using JSX and other templating languages. And you can choose to use features like shadow dom and rendering per element as fits.
+It doesn't rely on specific build pipelines or compilers, so it fits right into existing projects. It supports and provides decorators for Typescript, using JSX and other templating languages. And you can choose to use features like shadow dom and rendering per element as fits.
 
-It won't stop you from using any existing techniques for custom elements. It's purpose is to aid you as a developer by providing tested functionality and speed up your work.
+It won't stop you from using any existing techniques for custom elements. Its purpose is to aid you as a developer by providing tested functionality and speed up your work.
 
 ## Try FrameJS
 
@@ -31,13 +31,13 @@ Other Hello World templates on stackblitz:
 
 Make sure you've installed and/or updated Node before continuing.
 
-It's recommended to setting up tools to bundle and minify for production. A modern build pipeline typically consists of:
+It's recommended for setting up tools to bundle and minify for production. A modern build pipeline typically consists of:
 
-* A package manager, such as Yarn or npm. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.
+* A package manager, such as Yarn or NPM. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.
 
-* A bundler, such as webpack or Browserify. It lets you write modular code and bundle it together into small packages to optimize load time.
+* A bundler, such as Webpack or Browserify. It lets you write modular code and bundle it together into small packages to optimize load time.
 
-> The custom elements API dictates elements to we written as es6 classes. Good practice is to let a consumer application transform the code to es5, or compile to both. The browser runtime cannot mix es5 and es6 custom elements.
+> The custom elements API dictates elements to we written as es6 classes. A good practice is to let a consumer application transform the code to es5, or compile to both. The browser runtime cannot mix es5 and es6 custom elements.
 
 #### Usage
 
@@ -73,7 +73,7 @@ For more information on the polyfills, see the [web components polyfill document
 
 ## Examples
 
-These examples expects that you are using a module bundler of some kind.
+These examples expect that you are using a module bundler of some kind.
 
 ### Example: Callback after first render and on destroy
 
@@ -195,7 +195,7 @@ customElements.define('hello-world', HelloWorld);
 ```
 
 ### Example: Using event listeners
-Event listeners is added on connectedCallback and removed on disconnectedCallback.
+Event listeners are added on connectedCallback and removed on disconnectedCallback.
 
 The syntax for a listener is:
 * `'Event'` - event listener on element
@@ -264,7 +264,7 @@ class HelloWorld extends FrameElement {
 customElements.define('hello-world', HelloWorld);
 ```
 
-> You should not set `<style>` in the template if you are using vdom like [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts)
+> You should not set `<style>` in the template if you are using VDOM like [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts)
 
 ### Example: Custom element without shadow dom
 ```js
@@ -379,7 +379,7 @@ customElements.define('hello-world', HelloWorld);
 ```
 
 ### Using preact renderer
-To be able to use JSX you need to either use babel (output to es6) or typescript. This example is using typescript with `--jsx --jsxFactory h` .
+To be able to use JSX you need to either use babel (output to es6) or typescript. This example is using typescript with `--jsx --jsxFactory h`.
 
 [Preact example on Stackblitz](https://stackblitz.com/edit/framejs-preact?file=index.js)
 
@@ -400,6 +400,6 @@ customElements.define('hello-world', HelloWorld);
 ```
 
 ## Write a custom renderer
-The built in renderer is very simple: it receives the returned value, and replaces innerHTML with the new template when updated.
+The built-in renderer is very simple: it receives the returned value and replaces innerHTML with the new template when updated.
 
 See the code for [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts) for implementation details.
