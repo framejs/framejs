@@ -9,7 +9,7 @@ With it's small size (~1.5kb gzipped) it fits well for simple elements as well a
 ### Why FrameJS?
 FrameJS tries to make it easy and safe to build UI elements you can use across projects and frameworks.
 
-It doesn't rely on specific build pipelines or compilers, so it fits right in to existing projects. It supports and provides decorators for Typescript, using JSX and other templating languages. And you can choose to use features like shadow dom and rendering per elements as fits.
+It doesn't rely on specific build pipelines or compilers, so it fits right in to existing projects. It supports and provides decorators for Typescript, using JSX and other templating languages. And you can choose to use features like shadow dom and rendering per element as fits.
 
 It won't stop you from using any existing techniques for custom elements. It's purpose is to aid you as a developer by providing tested functionality and speed up your work.
 
