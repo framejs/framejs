@@ -43,13 +43,15 @@ export const Property = (options?: IPropOptions): any => {
 
 export const Attribute = (options?: IPropOptions): any => {
     return (target: any, propName: any) => {
-        if (!target.constructor.hasOwnProperty('propTypes')) {
+        if (!target.constructor.propTypes) {
             target.constructor.propTypes = {};
         }
-        if (!target.constructor.hasOwnProperty('reflectedProps')) {
+
+        if (!target.constructor.reflectedProps) {
             target.constructor.reflectedProps = [];
         }
-        target.constructor.reflectedProps = [...target.constructor.reflectedProps, propName];
+
+        target.constructor.reflectedProps.push(propName);
 
         target.constructor.propTypes[propName] = options ? options.type : reflectType(target, propName);
         attachProperty(target, propName);
@@ -58,7 +60,7 @@ export const Attribute = (options?: IPropOptions): any => {
 
 export const Observe = (propName: string): any => {
     return (target, methodName) => {
-        if (!target.constructor.hasOwnProperty('propObservers')) {
+        if (!target.constructor.propObservers) {
             target.constructor.propObservers = {};
         }
         target.constructor.propObservers[propName] = methodName;
@@ -67,7 +69,7 @@ export const Observe = (propName: string): any => {
 
 export const Listen = (eventString: string): any => {
     return (target, methodName) => {
-        if (!target.constructor.hasOwnProperty('eventListeners')) {
+        if (!target.constructor.eventListeners) {
             target.constructor.eventListeners = {};
         }
 

@@ -1,8 +1,18 @@
 import { FrameElement } from '../src/frame-element.js';
-import { Property, Attribute, Observe, Listen, Event, EventEmitter } from '../src/frame-decorators.js';
+import { Define, Property, Attribute, Observe, Listen, Event, EventEmitter } from '../src/frame-decorators.js';
 
-class MyElementDecorators extends FrameElement {
-    static is = 'my-element-decorators';
+const Mixin = base => {
+    class MixClass extends base {
+        @Attribute() mixClassAttribute: boolean = true;
+    }
+
+    return MixClass;
+};
+
+@Define({
+    tag: 'my-element-decorators'
+})
+class MyElementDecorators extends Mixin(FrameElement) {
     public newHappyValue;
     public spanClicked: boolean = false;
     public elementClicked: boolean = false;
@@ -31,8 +41,6 @@ class MyElementDecorators extends FrameElement {
         return `Hello <span>${this.message}</span>!`;
     }
 }
-
-customElements.define(MyElementDecorators.is, MyElementDecorators);
 
 let assert = chai.assert;
 
@@ -122,6 +130,13 @@ describe('FrameElement decorators', () => {
                 done();
             });
             myElementInstance.click();
+        });
+    });
+
+    it('Should be able to inherence Attributes set from mixin using @Attribute', done => {
+        setTimeout(() => {
+            assert.equal(myElementInstance.hasAttribute('mix-class-attribute'), true);
+            done();
         });
     });
 });

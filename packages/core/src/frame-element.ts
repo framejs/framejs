@@ -42,7 +42,9 @@ export const attachProperty = (prototype: any, propName: string) => {
 
         if (this.reflectedPropsMap[propName]) {
             if (!(this as any).isConnected) {
-                Promise.resolve().then(() => this._setAttributeValue(this.reflectedPropsMap[propName], value));
+                setTimeout(() => {
+                    this._setAttributeValue(this.reflectedPropsMap[propName], value);
+                });
             } else {
                 this._setAttributeValue(this.reflectedPropsMap[propName], value);
             }
@@ -86,8 +88,8 @@ export interface IAttributesPropsMap {
 export class FrameElement extends HTMLElement {
     static props: IProps;
     static propTypes: IPropTypes;
-    static reflectedProps: string[] = [];
-    static eventListeners: IEventListeners = {};
+    static reflectedProps: string[];
+    static eventListeners: IEventListeners;
     static propObservers: IPropObservers;
     public props: IProps = {};
     public reflectedPropsMap: IReflectedPropsMap;
@@ -99,23 +101,29 @@ export class FrameElement extends HTMLElement {
     private _hasValidated: boolean = false;
 
     static get observedAttributes(): string[] {
-        return this.reflectedProps.map(propName => {
-            return dashCase(propName);
-        });
+        return this.reflectedProps
+            ? this.reflectedProps.map(propName => {
+                  return dashCase(propName);
+              })
+            : [];
     }
 
     constructor() {
         super();
+        if ((this.constructor as any).reflectedProps) {
+            this.reflectedPropsMap = (this.constructor as any).reflectedProps.reduce((result, prop) => {
+                result[prop] = dashCase(prop);
+                return result;
+            }, {});
 
-        this.reflectedPropsMap = (this.constructor as any).reflectedProps.reduce((result, prop) => {
-            result[prop] = dashCase(prop);
-            return result;
-        }, {});
-
-        this.attributesPropsMap = (this.constructor as any).reflectedProps.reduce((result, prop) => {
-            result[dashCase(prop)] = prop;
-            return result;
-        }, {});
+            this.attributesPropsMap = (this.constructor as any).reflectedProps.reduce((result, prop) => {
+                result[dashCase(prop)] = prop;
+                return result;
+            }, {});
+        } else {
+            this.reflectedPropsMap = {};
+            this.attributesPropsMap = {};
+        }
 
         for (let propName in (this.constructor as any).props) {
             const value = (this.constructor as any).props[propName];
@@ -154,7 +162,9 @@ export class FrameElement extends HTMLElement {
 
     public _setPropertyValueFromAttributeValue(attrName: string, newValue: string): void {
         const propName = this.attributesPropsMap[attrName];
-        const typeFn = (this.constructor as any).propTypes[propName];
+        const typeFn = (this.constructor as any).propTypes[propName]
+            ? (this.constructor as any).propTypes[propName]
+            : String;
 
         let value;
 
