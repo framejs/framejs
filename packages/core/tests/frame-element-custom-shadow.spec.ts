@@ -2,8 +2,8 @@ import { FrameElement } from '../src/frame-element.js';
 let assert = chai.assert;
 
 class MyElement extends FrameElement {
-    static is = 'my-element-no-shadow';
-    static shadow = false;
+    static is = 'my-element-custom-shadow';
+    static shadowMode = 'closed';
 
     render() {
         return `Hello FrameJS!`;
@@ -12,11 +12,11 @@ class MyElement extends FrameElement {
 
 customElements.define(MyElement.is, MyElement);
 
-describe('FrameElement no shadow', () => {
+describe('FrameElement custom shadow', () => {
     let myElementInstance;
 
     beforeEach(done => {
-        const myElement = document.createElement('my-element-no-shadow');
+        const myElement = document.createElement('my-element-custom-shadow');
         myElementInstance = document.body.appendChild(myElement);
         done();
     });
@@ -25,16 +25,9 @@ describe('FrameElement no shadow', () => {
         done();
     });
 
-    it('Should render without shadow', done => {
+    it('Should render with closed shadow mode', done => {
         setTimeout(() => {
             assert.equal(myElementInstance.shadowRoot, undefined);
-            done();
-        });
-    });
-
-    it('Should render template without shadow', done => {
-        setTimeout(() => {
-            assert.equal(myElementInstance.innerHTML, 'Hello FrameJS!');
             done();
         });
     });

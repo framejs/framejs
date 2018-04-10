@@ -1,6 +1,6 @@
 {
   "name": "@framejs/core",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A ultra light library for writing custom elements",
   "main": "dist/index.js",
   "files": [
@@ -44,8 +44,8 @@
     "url": "https://github.com/framejs/framejs/issues"
   },
   "homepage": "https://github.com/framejs/framejs#readme",
-  "engines" : { 
-    "node" : ">=8.0" 
+  "engines": {
+    "node": ">=8.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",

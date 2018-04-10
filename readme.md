@@ -274,7 +274,22 @@ customElements.define('hello-world', HelloWorld);
 import { FrameElement } from '@framejs/core';
 
 class HelloWorld extends FrameElement {
-    _shadow = false;
+    static get shadow() {
+        return false;
+    }
+}
+
+customElements.define('hello-world', HelloWorld);
+```
+
+### Example: Custom element with custom shadow mode
+```js
+import { FrameElement } from '@framejs/core';
+
+class HelloWorld extends FrameElement {
+    static get shadowMode() {
+        return 'closed';
+    }
 }
 
 customElements.define('hello-world', HelloWorld);

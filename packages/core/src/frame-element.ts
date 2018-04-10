@@ -8,23 +8,19 @@ export const camelCase = (string: string): string => {
     });
 };
 
-export const createProperty = (prototype: any, propName: string, value: any) => {
+export const createProperty = (prototype: any, propName: string, value?: any) => {
     if (prototype.hasOwnProperty(propName)) {
         const preValue = prototype[propName];
         delete prototype[propName];
         prototype[propName] = preValue;
         prototype.props[propName] = preValue;
-    } else {
+    } else if (value) {
         prototype[propName] = value;
         prototype.props[propName] = value;
     }
 
     Promise.resolve().then(() => {
         attachProperty(prototype, propName);
-
-        if (prototype.reflectedPropsMap[propName]) {
-            prototype._setAttributeValue(prototype.reflectedPropsMap[propName], prototype[propName]);
-        }
     });
 };
 
@@ -40,18 +36,14 @@ export const attachProperty = (prototype: any, propName: string) => {
         const oldValue = this.props[propName];
         this.props[propName] = value;
 
-        if (this.reflectedPropsMap[propName]) {
-            if (!(this as any).isConnected) {
-                setTimeout(() => {
-                    this._setAttributeValue(this.reflectedPropsMap[propName], value);
-                });
-            } else {
+        if (this.__connected) {
+            if (this.reflectedPropsMap[propName]) {
                 this._setAttributeValue(this.reflectedPropsMap[propName], value);
             }
-        }
 
-        if (prototype.constructor.propObservers && prototype.constructor.propObservers[propName]) {
-            this[prototype.constructor.propObservers[propName]](oldValue, value);
+            if (prototype.constructor.propObservers && prototype.constructor.propObservers[propName]) {
+                this[prototype.constructor.propObservers[propName]](oldValue, value);
+            }
         }
 
         if (this._invalidateOnPropChanges) {
@@ -91,14 +83,15 @@ export class FrameElement extends HTMLElement {
     static reflectedProps: string[];
     static eventListeners: IEventListeners;
     static propObservers: IPropObservers;
+    static shadow: boolean;
+    static shadowMode: string;
     public props: IProps = {};
     public reflectedPropsMap: IReflectedPropsMap;
     public attributesPropsMap: IAttributesPropsMap;
-    public _shadow: boolean = true;
-    public _shadowMode: 'open' | 'closed' = 'open';
     public _invalidateOnPropChanges: boolean = true;
     private _needsRender: boolean = false;
     private _hasValidated: boolean = false;
+    public __connected = false;
 
     static get observedAttributes(): string[] {
         return this.reflectedProps
@@ -110,6 +103,13 @@ export class FrameElement extends HTMLElement {
 
     constructor() {
         super();
+
+        if ((this.constructor as any).shadow || (this.constructor as any).shadow === undefined) {
+            const mode =
+                (this.constructor as any).shadowMode === undefined ? 'open' : (this.constructor as any).shadowMode;
+            this.attachShadow({ mode: mode });
+        }
+
         if ((this.constructor as any).reflectedProps) {
             this.reflectedPropsMap = (this.constructor as any).reflectedProps.reduce((result, prop) => {
                 result[prop] = dashCase(prop);
@@ -133,12 +133,24 @@ export class FrameElement extends HTMLElement {
         this.invalidate();
     }
 
+    connectedCallback() {
+        this.__connected = true;
+        if ((this.constructor as any).reflectedProps) {
+            (this.constructor as any).reflectedProps.forEach(prop => {
+                if (this[prop]) {
+                    const value = this[prop];
+                    this[prop] = value;
+                }
+            });
+        }
+    }
+
     public disconnectedCallback(): void {
         this._elementCallback('elementDidUnmount');
         this._configureListeners(false);
     }
 
-    public attributeChangedCallback(attrName: string, _oldValue: string, newValue: string): void {
+    public attributeChangedCallback(attrName: string, oldValue: string, newValue: string): void {
         this._setPropertyValueFromAttributeValue(attrName, newValue);
     }
 
@@ -214,16 +226,12 @@ export class FrameElement extends HTMLElement {
             this._needsRender = true;
             this._needsRender = await false;
 
-            if (!this._hasValidated && this._shadow) {
-                this.attachShadow({ mode: this._shadowMode });
-            }
-
             this.renderer();
 
             if (!this._hasValidated) {
+                this._applyStyle();
                 this._configureListeners();
                 this._elementCallback('elementDidMount');
-                this._applyStyle();
             }
 
             this._hasValidated = true;

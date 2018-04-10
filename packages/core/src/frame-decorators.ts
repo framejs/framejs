@@ -1,4 +1,4 @@
-import { attachProperty } from './frame-element.js';
+import { attachProperty, createProperty } from './frame-element.js';
 
 export interface IPropOptions {
     type: Function;
@@ -24,8 +24,8 @@ export interface CustomElementOptionsType {
 export const Define = (options: CustomElementOptionsType): any => {
     return (target: any) => {
         const Klass = class extends target {
-            public _shadow = options.shadow ? options.shadow : true;
-            public _shadowMode = options.mode ? options.mode : 'open';
+            static shadow = options.shadow ? options.shadow : true;
+            static shadowMode = options.mode ? options.mode : 'open';
             public _invalidateOnPropChanges = options.invalidateOnPropChanges
                 ? options.invalidateOnPropChanges
                 : 'true';
@@ -52,8 +52,8 @@ export const Attribute = (options?: IPropOptions): any => {
         }
 
         target.constructor.reflectedProps.push(propName);
-
         target.constructor.propTypes[propName] = options ? options.type : reflectType(target, propName);
+
         attachProperty(target, propName);
     };
 };
