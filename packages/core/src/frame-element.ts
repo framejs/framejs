@@ -130,19 +130,20 @@ export class FrameElement extends HTMLElement {
             createProperty(this, propName, value);
         }
 
-        this.invalidate();
-    }
+        requestAnimationFrame(() => {
+            this.__connected = true;
 
-    connectedCallback() {
-        this.__connected = true;
-        if ((this.constructor as any).reflectedProps) {
-            (this.constructor as any).reflectedProps.forEach(prop => {
-                if (this[prop]) {
-                    const value = this[prop];
-                    this[prop] = value;
-                }
-            });
-        }
+            if ((this.constructor as any).reflectedProps) {
+                (this.constructor as any).reflectedProps.forEach(prop => {
+                    if (this[prop]) {
+                        const value = this[prop];
+                        this[prop] = value;
+                    }
+                });
+            }
+        });
+
+        this.invalidate();
     }
 
     public disconnectedCallback(): void {
@@ -183,7 +184,7 @@ export class FrameElement extends HTMLElement {
         if (typeFn.name === 'Boolean') {
             value = newValue === '';
         } else {
-            value = newValue !== null ? typeFn(newValue) : undefined;
+            value = newValue !== null ? typeFn(newValue).valueOf() : undefined;
         }
 
         if (this[propName] !== value) {

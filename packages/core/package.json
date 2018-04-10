@@ -1,6 +1,6 @@
 {
   "name": "@framejs/core",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A ultra light library for writing custom elements",
   "main": "dist/index.js",
   "files": [
