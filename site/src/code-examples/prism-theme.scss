@@ -1,17 +1,24 @@
 :host {
     font-size: 15px;
-    padding:32px;
+    padding:24px;
     display: block;
+
+    @media screen and (min-width: 1000px){
+        font-size: 17px;
+        padding:32px;
+    }
 }
 
 pre {
     margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
- code[class*="language-"],
- pre[class*="language-"] {
-     color: #393A34;
-     font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+ code,
+ pre {
+     color: #5e606f;
+     font-family: 'Roboto Mono', monospace;
      direction: ltr;
      text-align: left;
      white-space: pre;
@@ -61,7 +68,7 @@ pre {
  .token.prolog,
  .token.doctype,
  .token.cdata {
-     color: #008000; font-style: italic;
+     color: #9497a5; font-style: italic;
  }
  
  .token.namespace {
@@ -69,7 +76,7 @@ pre {
  }
  
  .token.string {
-     color: #A31515;
+    //  color: var(--primary-color-shade, #A31515);
  }
  
  .token.punctuation,
@@ -94,7 +101,7 @@ pre {
  .language-json .token.boolean, 
  .language-json .token.number, 
  code[class*="language-css"]{
-     color: #0000ff;
+    //  color: #0000ff;
  }
  
  .token.function {
@@ -122,6 +129,7 @@ pre {
  .token.class-name,
  .language-json .token.property {
      color: #2B91AF;
+     color: var(--primary-color-shade, #A31515);
  }
  
  .token.tag,
