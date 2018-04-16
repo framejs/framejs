@@ -1,0 +1,37 @@
+:host {
+    display: inline-block;
+    
+    a {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: #fff;
+        background: rgba(255,255,255,0.2);
+        border-radius: var(--radius, 3px);
+        display: inline-block;
+    }
+
+
+    .icon {
+        vertical-align: middle;
+        display: inline-block;
+        padding-right: 4px;
+
+        svg {
+            vertical-align: text-top;
+        }
+    }
+}
+
+:host(:hover) {
+    a {
+        color: var(--primary-color-shade, #000);
+        background: #fff;
+        box-shadow: 0 5px 14px #8B72A7
+    }
+
+    .icon {
+        path {
+            fill: var(--primary-color-shade, #000);
+        }
+    }
+}
