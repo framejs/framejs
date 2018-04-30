@@ -6,12 +6,16 @@
     "type": "git",
     "url": "git+https://github.com/framejs/framejs.git"
   },
+  "scripts": {
+    "publish:site": "git subtree push --prefix site/dist origin gh-pages"
+  },
   "author": "Emil Møller <emilrmoeller@gmail.com>",
   "license": "MIT",
   "bolt": {
     "version": "^0.19.0",
     "workspaces": [
-      "packages/*"
+      "packages/*",
+      "site"
     ]
   },
   "devDependencies": {

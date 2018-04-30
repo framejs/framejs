@@ -1,4 +1,5 @@
-**/dist
+packages/**/dist
 **/node_modules
+node_modules
 .idea
 .tests
