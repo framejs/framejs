@@ -1,0 +1,36 @@
+{
+  "name": "@framejs/renderer-react",
+  "version": "1.0.8",
+  "description": "A Framejs renderer for react",
+  "main": "dist/renderer-react.js",
+  "types": "dist/renderer-preact.d.ts",
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/framejs/framejs.git"
+  },
+  "keywords": [
+    "react",
+    "webcomponents",
+    "framejs"
+  ],
+  "author": "Emil Møller <emilrmoeller@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/framejs/framejs/issues"
+  },
+  "homepage": "https://github.com/framejs/framejs#readme",
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.1"
+  }
+}
