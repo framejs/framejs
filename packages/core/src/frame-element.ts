@@ -141,9 +141,9 @@ export class FrameElement extends HTMLElement {
                     }
                 });
             }
-        });
 
-        this.invalidate();
+            this.invalidate();
+        });
     }
 
     public disconnectedCallback(): void {
@@ -223,6 +223,9 @@ export class FrameElement extends HTMLElement {
     }
 
     public async invalidate(): Promise<void> {
+        if (!this.__connected) {
+            return;
+        }
         if (!this._needsRender) {
             this._needsRender = true;
             this._needsRender = await false;

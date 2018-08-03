@@ -22,13 +22,14 @@ describe('FrameElement custom shadow', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('Should render with closed shadow mode', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             assert.equal(myElementInstance.shadowRoot, undefined);
             done();
-        });
+        };
     });
 });

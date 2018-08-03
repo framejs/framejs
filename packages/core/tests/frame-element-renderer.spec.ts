@@ -37,23 +37,25 @@ describe('FrameElement Renderer', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('Should use custom renderer from renderer mixin', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             assert.equal(myElementInstance.shadowRoot.innerHTML, 'RENDERED: Hello FrameJS!');
             done();
-        });
+        };
     });
 
     it('Should re-renderer on prop change using mixin renderer', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             myElementInstance.message = 'Thanks';
+
             setTimeout(() => {
                 assert.equal(myElementInstance.shadowRoot.innerHTML, 'RENDERED: Thanks FrameJS!');
                 done();
             });
-        });
+        };
     });
 });

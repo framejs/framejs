@@ -23,13 +23,14 @@ describe('FrameElement style', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('should set style from static style', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             assert.equal(myElementInstance.shadowRoot.innerHTML, 'Hello FrameJS!<style>:host { color: blue; }</style>');
             done();
-        });
+        };
     });
 });

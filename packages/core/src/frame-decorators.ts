@@ -24,7 +24,7 @@ export interface CustomElementOptionsType {
 export const Define = (options: CustomElementOptionsType): any => {
     return (target: any) => {
         const Klass = class extends target {
-            static shadow = options.shadow ? options.shadow : true;
+            static shadow = options.shadow !== undefined ? options.shadow : true;
             static shadowMode = options.mode ? options.mode : 'open';
             public _invalidateOnPropChanges = options.invalidateOnPropChanges
                 ? options.invalidateOnPropChanges

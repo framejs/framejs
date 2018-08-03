@@ -22,20 +22,21 @@ describe('FrameElement no shadow', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('Should render without shadow', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             assert.equal(myElementInstance.shadowRoot, undefined);
             done();
-        });
+        };
     });
 
     it('Should render template without shadow', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             assert.equal(myElementInstance.innerHTML, 'Hello FrameJS!');
             done();
-        });
+        };
     });
 });

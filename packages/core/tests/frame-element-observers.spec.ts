@@ -36,28 +36,29 @@ describe('FrameElement Observed Props', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('Should update property from observer function', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             myElementInstance.observedProp = true;
 
             setTimeout(() => {
                 assert.equal(myElementInstance.observedPropNewVal, true);
                 done();
             });
-        });
+        };
     });
 
     it('Should update property from observer function via attribute set by user', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             myElementInstance.setAttribute('observed-prop', '');
 
             setTimeout(() => {
                 assert.equal(myElementInstance.observedPropNewVal, true);
                 done();
             });
-        });
+        };
     });
 });

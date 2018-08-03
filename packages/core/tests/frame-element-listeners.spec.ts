@@ -36,24 +36,30 @@ describe('FrameElement Listeners', () => {
     });
 
     afterEach(done => {
+        myElementInstance = null;
         done();
     });
 
     it('Should run handle click on element click', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             myElementInstance.click();
-            assert.equal(myElementInstance.isClicked, true);
-            done();
-        });
+
+            setTimeout(() => {
+                assert.equal(myElementInstance.isClicked, true);
+                done();
+            });
+        };
     });
 
     it('Should run handle click on shadowRoot child element click', done => {
-        setTimeout(() => {
+        myElementInstance.elementDidMount = () => {
             const el = myElementInstance.shadowRoot.querySelector('span');
             el.click();
 
-            assert.equal(myElementInstance.isSpanClicked, true);
-            done();
-        });
+            setTimeout(() => {
+                assert.equal(myElementInstance.isSpanClicked, true);
+                done();
+            });
+        };
     });
 });
