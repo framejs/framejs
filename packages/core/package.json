@@ -1,6 +1,6 @@
 {
   "name": "@framejs/core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A ultra light library for writing custom elements",
   "main": "dist/index.js",
   "files": [
@@ -55,7 +55,7 @@
     "@webcomponents/webcomponentsjs": "^1.1.1",
     "chai": "^4.1.2",
     "husky": "^0.14.3",
-    "karma": "^2.0.0",
+    "karma": "^3.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-mocha": "^1.3.0",

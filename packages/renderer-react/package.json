@@ -1,6 +1,6 @@
 {
   "name": "@framejs/renderer-react",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Framejs renderer for react",
   "main": "dist/renderer-react.js",
   "types": "dist/renderer-preact.d.ts",
