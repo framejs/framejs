@@ -14,5 +14,5 @@ steps:
 
 - script: |
     npm install
-    cd ./packages/core && npm run test
+    cd ./packages/core && npm install && npm run test && cd ../../
   displayName: 'npm install and test'
