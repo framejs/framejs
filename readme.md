@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/emilrmoeller/framejs/_apis/build/status/framejs.framejs)](https://dev.azure.com/emilrmoeller/framejs/_build/latest?definitionId=1)
+
 # FrameJS
 
 Welcome to FrameJS! This documentation tries to help answer any questions you may have about what FrameJS is, how to use it and what its APIs are.
