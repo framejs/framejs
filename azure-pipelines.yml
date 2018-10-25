@@ -14,5 +14,6 @@ steps:
 
 - script: |
     npm install
-    npm run test
+    npm install -g bolt@0.22.4
+    bolt ws run test
   displayName: 'npm install and test'

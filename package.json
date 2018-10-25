@@ -7,7 +7,6 @@
     "url": "git+https://github.com/framejs/framejs.git"
   },
   "scripts": {
-    "test": "bolt ws run test",
     "publish:site": "git subtree push --prefix site/dist origin gh-pages"
   },
   "author": "Emil Møller <emilrmoeller@gmail.com>",
@@ -20,6 +19,6 @@
     ]
   },
   "devDependencies": {
-    "bolt": "^0.19.3"
+    "bolt": "^0.22.4"
   }
 }
