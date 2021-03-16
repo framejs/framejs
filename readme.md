@@ -420,4 +420,4 @@ customElements.define('hello-world', HelloWorld);
 ## Write a custom renderer
 The built-in renderer is very simple: it receives the returned value and replaces innerHTML with the new template when updated.
 
-See the code for [renderer-preact](https://github.com/framejs/framejs/blob/master/packages/renderer-preact/src/index.ts) for implementation details.
+See the code for [renderer-preact](https://github.com/framejs/framejs/tree/master/packages/renderer-preact) for implementation details.
